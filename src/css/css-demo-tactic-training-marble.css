@@ -1,0 +1,79 @@
+	body{
+		background-color:#445656;
+		margin:0px;
+		font-family:Trebuchet MS;
+	}
+	#board{
+		margin-left:20px;
+		width:635px;
+		height:635px;
+		background-image:url('../demo-images/board-bg-marble.jpg');
+		padding-left:15px;
+		padding-top:20px;
+		background-repeat:no-repeat;
+	}
+	#header{
+		margin-top:5px;
+		margin-left:10px;
+		width:650px;
+		height:30px;
+		position:relative;	
+		clear:both;
+	}
+	#hint{	
+		position:absolute;
+		color:#FFF;
+		right:0px;
+		top:0px;
+	}
+	#hint a{
+		color:white;
+	}
+	#hintInner{
+		color:yellow;
+	}
+	#gameInfo{
+		font-size:1.2em;
+		line-height:30px;
+		color:#FFF;
+		font-weight:bold;
+		width:400px;
+		padding-left:20px;
+		
+	}
+	#hintContainer{
+		position:relative;
+		clear:both;
+		width:650px;
+		height:25px;
+	}
+	#mainContainer{
+		position:relative;
+	}
+	.ChessBoardLabel{
+		color:black;
+	}
+	div.ChessMoveIndicator{
+		border:4px solid #F9F340;
+		opacity:0.5;
+		filter:alpha(opacity=50);
+
+	}
+	#loadingDiv{
+		position:absolute;
+		padding-top:5px;
+		left:218px;
+		top:300px;
+		width:250px;
+		height:80px;
+		text-align:center;
+		border:1px solid #000;
+		background-color:#FFF;
+		z-index:100000;
+		line-height:45px;
+		font-size:0.9em;
+
+	}
+	#loadingDiv div{
+		height:30px;
+	}

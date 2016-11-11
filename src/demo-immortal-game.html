@@ -1,0 +1,113 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>The immortal game</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css"></link>
+	<script type="text/javascript" src="js/external/mootools-core-1.3-full-compat.js"></script>
+	<script type="text/javascript" src="js/chess.js"></script>
+
+	<link rel="stylesheet" href="css/demo-immortal-game.css" type="text/css"></link>
+	<style type="text/css">
+	body{
+		background-color:#000;
+		margin:0px;
+		font-family:Palatino Linotype, Book Antiqua, Palatino, serif;
+		text-align:center;
+		line-height:130%;
+		font-size:0.9em;
+	}
+	a{
+		color:#600;
+		text-decoration:underline;
+	}
+	#mainContainer{
+		width:760px;
+		margin:0 auto;
+		margin-top:10px;
+		margin-bottom:10px;
+		text-align:left;
+		background-color:#FFF;
+		padding:10px;
+		border:3px double #FFF;
+
+	}
+	#mainContent{
+		padding:10px;
+	}
+	#boardInformation{
+		float:right;
+		width:400px;
+		margin-left:10px;
+		margin-top:40px;
+		margin-bottom:10px;
+		background-color:#EEE;
+		border:1px solid #000;
+	}
+	#boardInformation a{
+		color:#000;
+	}
+	#boardInformation a.ActiveInlineChessMove{
+		background-color:#555;
+		color:#FFF;
+	}
+	#board{
+		padding-left:15px;
+		padding-top:20px;
+		background-repeat:no-repeat;
+	}
+	#moves{
+		padding:10px;
+		font-size:0.8em;
+		color:#000;
+		line-height:150%;
+		font-family:arial;
+	}
+	div.ChessMoveIndicator{
+		border:2px solid #600;
+
+	}
+	.infoText{
+		font-size:0.8em;
+		font-style:italic;
+	}
+	</style>
+	<script type="text/javascript">
+	function startAutoPlay()
+	{
+		setTimeout('chessObj.autoPlay()',1000);
+	}
+	</script>
+</head>
+<body>
+<div id="mainContainer">
+	<div id="heading"><img src="demo-images/heading-immortal-game.png"></div>
+	<div id="mainContent">
+	<div id="boardInformation">
+		<div id="boardContainer">
+			<div id="board"></div>
+		</div>
+		<div id="moves"></div>
+	</div>
+	<p class="infoText">Text from <a href="http://en.wikipedia.org/wiki/Immortal_game" onclick="var w = window.open(this.href);return false">wikipedia.org</a></p>
+	<p>Adolf Anderssen was one of the strongest players of his time and was considered by many to be the world champion after winning the 1851 London tournament. Lionel Kieseritzky lived in France much of his life, where he gave chess lessons, and played games for five francs an hour at the Caf� de la Regence in Paris. Kieseritzky was well known for being able to beat lesser players despite handicapping himself � by playing without his queen, for example.</p>
+	<p>Played between the two great players at the Simpson's-in-the-Strand Divan in London, the immortal game was an informal one played during a break in a formal tournament. Kieseritzky was very impressed when the game was over, and telegraphed the moves of the game to his Parisian chess club. The French chess magazine La Regence published the game in July 1851. This game was later nicknamed "The Immortal Game" in 1855 by the Austrian Ernst Falkbeer.</p>
+
+	<p>The immortal game has resurfaced in many unusual guises. The town of Marostica, Italy has replayed the immortal game with live players, dressed as chess pieces, every year from September 2, 1923. The position after the 20th move is on a 1984 stamp from Suriname. The final part of the game was used as an inspiration for the chess game in the 1982 science fiction movie Blade Runner, though the chessboards used in the film are not arranged exactly the same as those in the immortal game (indeed, although the film's game is played remotely by two people, each with a supposedly identical board, the boards do not actually match each other). It was also the basis of a detective novel of the same name by Mark Coggins.</p>
+	<p>This game is acclaimed as an excellent demonstration of the style of chess play in the 19th century, where rapid development and attack were considered the most effective way to win, where many gambits and counter-gambits were offered (and not accepting them would be considered slightly ungentlemanly), and where material was often held in contempt. These games, with their rapid attacks and counter-attacks, are often entertaining to review, even if some of the moves would no longer be considered the best by today's standards.</p>
+	<p>In this game, Anderssen wins the game despite sacrificing a bishop on move 11, both rooks starting on move 18, and the queen on move 22 to produce checkmate. He offered both rooks to show that two active pieces are worth a dozen sleeping at home. Anderssen later demonstrated the same kind of approach in the Evergreen Game.</p>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+var chessObj = new DHTMLGoodies.Chess({ bgImageLightSquares:'demo-images/piece_bg_l_immortal_game.png',bgImageDarkSquares:'demo-images/piece_bg_dark_immortal_game.png',boardLabels:false,displayMovesInline:'moves',animationSpeed:1,autoPlayDelayBetweenMoves:1,callbackOnGameLoaded:'startAutoPlay',parentRef:'board',pgnFile:'pgn/immortal-game.pgn',chessSet:'alpha',squareSize:45,colorLightSquares:'#EEEEEE',colorDarkSquares:'#888',serverFile:'chess.php',displayGameAttributes:{ opening:'details_opening',white:'details_white',black:'details_black',event:'details_event',result:'details_result', WhiteElo:'details_white_elo', BlackElo:'details_black_elo',date:'details_date' } } );
+chessObj.showGame(0)
+</script>
+
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,304 @@
+#mainContainer{
+	width:980px;
+	
+}
+
+
+/**	The board for the 45x45 chess set */
+div.ChessBoardParentOfParentContainer45{
+	padding-left:20px;
+	padding-top:20px;
+	width:420px;
+	height:440px;
+	float:left;
+	background-image:url('../demo-images/board-bg-chess-db-6-small.jpg');
+	background-repeat:no-repeat;
+}
+
+div.ChessBoardParentOfParentContainer60{
+	padding-left:29px;
+	padding-top:29px;
+	width:540px;
+	height:560px;
+	float:left;
+	background-image:url('../demo-images/board-bg-chess-database-6.jpg');
+	background-repeat:no-repeat;
+}
+
+#rightColumn{
+	width:390px;
+	height:540px;
+	float:left;
+	position:relative;
+}
+#gameListContainer{
+	width:390px;
+	height:540px;
+	background-image:url('../demo-images/bg-details.gif');
+	background-repeat:no-repeat;
+	padding-top:30px;
+	padding-left:10px;
+	
+}
+.ChessBoardLabel{
+	color:#EBDFB5;
+}
+
+.ChessBoardParentContainer60{
+	border:1px solid #ffeac8;
+	width:498px;
+}
+div.ChessBoardParentContainer45{	/* Size of ChessBoard60, i.e 486 + 4 pixel padding on each side and 2 pixel border on each side = 486 + 8 + 4 */
+	border:1px solid #ffeac8;
+	width:376px;
+}
+div.ChessBoard60{ /* Chess board for 60x60 pixel squares - total size of board including labels around the board (A-H,1-8) */ 
+	width:486px;	/* Size of ChessBoardFrame60, i.e. 482 + 2 pixel border on each side */
+	height:486px;
+	padding:0px;
+	background-image:url('../demo-images/bg-border-chess-database-6.png');	
+	padding:4px;
+	border:2px solid #764618;
+
+}
+div.ChessBoardFrame60{	
+	width:482px;	/* Size of ChessBoardInner60 , i.e. 480 + 1 pixel border on each side */
+	height:482px;
+	border:2px solid #5a341d;
+	background-color:#9a6553;
+}
+div.ChessBoardInner60{
+	border:1px solid #ffeac8;
+}
+
+
+div.ChessBoard45{ /* Chess board for 45x45 pixel squares - total size of board including labels around the board (A-H,1-8) */ 
+	width:366px;	/* Size of ChessBoardFrame45, i.e. 362 + 2 pixel border on each side */
+	height:366px;
+	padding:0px;
+	background-image:url('../demo-images/bg-border-chess-database-6.png');	
+	padding:3px;
+	border:2px solid #764618;
+
+}
+div.ChessBoardFrame45{	
+	width:362px;	/* Size of ChessBoardInner45 , i.e. 480 + 1 pixel border on each side */
+	height:362px;
+	border:2px solid #5a341d;
+	background-color:#9a6553;
+}
+div.ChessBoardInner45{
+	border:1px solid #ffeac8;
+}
+div.chessBoardSquare_dark{
+	background-image:url('../demo-images/piece-bg-60-mahogny.png');
+}
+
+div.chessBoardSquare_light{
+	background-image:url('../demo-images/piece-bg-60-light-maple.png');
+}
+
+body{
+	font-family:Trebuchet MS;
+	background-color:#2f5e80;
+}
+table{
+	font-size:0.8em;
+}
+#divMoves{
+	clear:both;
+	font-size:0.9em;
+	font-style:italic;
+	width:330px;
+	height:290px;
+	overflow:auto;
+	
+	background-color:#FFF;
+	margin-top:10px;
+	padding:5px;
+	
+	line-height:130%;
+	
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	
+}
+#divMoves a{
+	text-decoration:none;
+}
+#options{
+	background-color:#FFF;
+	margin-top:0px;
+	padding:5px;
+	
+	border:1px solid #DDD;
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	
+	width:330px;	
+	font-size:0.8em;
+
+}
+
+#buttons{
+	margin-top:5px;
+	background-color:#DDD;
+	padding:5px;
+	clear:both;
+	border:1px solid #DDD;
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	height:20px;
+	width:330px;	
+	font-size:0.8em;		
+}
+#options p{
+	margin:0px;
+	margin-top:5px;
+}
+input{
+	width:50px;
+	margin-right:2px;
+	float:left;
+	border:1px solid #000;
+	background-color:#FFF;
+}
+#players,#activeMove{
+	text-align:center;
+	clear:both;
+	font-size:1.3em;
+	font-weight:bold;
+	height:30px;
+	width:550px;
+	color:#FFF;
+}
+a{
+	color:#363636;
+	text-decoration:underline;
+}
+#moveTab{
+	display:none;
+}
+#gameList{
+	width:330px;
+	height:540px;
+}
+#tabs{
+	position:absolute;
+	width:330px;
+	left:20px;
+	top:-13px;
+	z-index:100;
+}
+#tabs .tabInactive{
+	position:relative;
+	top:-2px;
+	background-image:url('../demo-images/tab-inactive.gif')
+	
+}
+#tabs .tabActive{
+	background-image:url('../demo-images/tab-active.gif');
+}
+#tabs div{
+	background-position:bottom left;
+	float:left;
+	background-repeat:no-repeat;
+	width:105px;
+	height:25px;
+	font-size:0.8em;
+	text-align:center;
+	line-height:25px;
+	cursor:pointer;
+}
+#tabs div span{
+	font-weight:bold;
+	display:block;
+}
+#tabs .tabInactive span{
+	padding-top:3px;
+}
+#tabs .tabActive span{
+	padding-top:1px;
+	color:#FFF;
+}
+#scrollDivGames{
+	overflow: auto; 
+	width: 330px; 
+	height: 490px;
+	border-left: 1px gray solid; 
+	border-bottom: 1px gray solid;
+	padding:0px;
+	margin: 0px;
+	background-color:#FFF
+}
+table,tr,td{
+	vertical-align:top;
+}
+
+#pgnList{
+	display:none;
+}
+#divListOfPgns{	/* Box where the actual pgn links are located */
+	width: 330px; 
+	height:480px;
+	background-color:#FFF;
+
+}
+
+#tabOptions{
+	margin-top:10px;
+	margin-left:10px;	
+	position:relative;
+	top:1px;
+	height:23px
+}
+
+.tabDetails{
+	padding:2px;
+	text-align:center;
+	width:100px;
+	margin-right:3px;
+	font-size:0.8em;
+	float:left;
+	cursor:pointer;
+	border:1px solid #000;
+	border-bottom:0px;
+	position:relative;
+}
+
+.tabDetailsActive{
+	background-color:#FFF;	
+}
+.tabDetailsInactive{
+	background-color:#CCC;
+	border-bottom:1px solid #000;
+	position:relative;
+	top:-1px;
+	margin-top:2px;
+	height:16px;
+}
+
+#boardOptions,#gameDetails{
+	height:120px;
+}
+#gameDetails td{
+	font-size:12px;
+}
+
+td.tableWidget_headerCell{
+	background-color:#676767;
+	color:#FFF;
+	border-right:1px solid #666;
+	border-left:1px solid #999;	
+	border-top:1px solid #999;
+	border-bottom:1px solid #999;	
+
+}
+div.widget_tableDiv{
+	border:1px solid #444;
+}
+div.ChessMoveIndicator{
+	border:3px solid #4591CA;
+
+}
+

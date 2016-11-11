@@ -1,0 +1,144 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>DHTML Chess - game database</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css"></link>
+	<script type="text/javascript" src="js/external/mootools-core-1.3-full-compat.js"></script>
+	<script type="text/javascript" src="js/chess.js"></script>
+
+	<link rel="stylesheet" href="css/demo-chess-4.css" type="text/css">
+</head>
+<body>
+<div id="mainContainer">
+	<div id="boardContainer">
+		<div id="board"></div>
+	</div>
+	<div id="rightColumn">
+		<div class="content">
+			<div id="playerStats">
+				<table cellpadding="2" cellspacing="0">
+					<tbody>
+					<tr>
+						<td colspan="2">
+							<div><span class="label">Event</span><span class="gameLabel" id="labelEvent">&nbsp;</span>&nbsp;</div>
+						</td>
+						<td>
+							<div><span class="label">Date</span><span class="gameLabel" id="labelDate">&nbsp;</span>&nbsp;</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div><span class="label">Site</span><span class="gameLabel" id="labelSite">&nbsp;</span>&nbsp;</div>
+						</td>
+						<td>
+							<div><span class="label">Rnd</span><span class="gameLabel" id="labelRound">&nbsp;</span>&nbsp;</div>
+						</td>
+						<td>
+							<div><span class="label">Res</span><span class="gameLabel" id="labelResult">&nbsp;</span>&nbsp;</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div><span class="label">White</span><span class="gameLabel" id="labelWhite">&nbsp;</span>&nbsp;</div>
+						</td>
+						<td>
+							<div><span class="label">Elo</span><span class="gameLabel" id="labelWhiteElo">&nbsp;</span>&nbsp;</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div><span class="label">Black</span><span class="gameLabel" id="labelBlack">&nbsp;</span>&nbsp;</div>
+						</td>
+						<td>
+							<div><span class="label">Elo</span><span class="gameLabel" id="labelBlackElo">&nbsp;</span>&nbsp;</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Displaying moves inside 4 different tables, 20 moves in each table -->
+			<div class="moveDiv">
+				<table id="moves1" cellpadding="1" cellspacing="0">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="moveDiv">
+				<table id="moves2" cellpadding="1" cellspacing="0">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="moveDiv">
+				<table id="moves3" cellpadding="1" cellspacing="0">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="moveDiv">
+				<table id="moves4" cellpadding="1" cellspacing="0">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="moves"></div>
+
+<div id="bottomContainer">
+	<div id="controls">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td><select id="gameListSelect"></select></td>
+				<td><a href="#" onclick="chessObj.moveToStart();return false"><img src="demo-images/demo-4-button-tostart.png"></a></td>
+				<td><a href="#" onclick="chessObj.move(-1);return false"><img src="demo-images/demo-4-button-back.png"></a></td>
+				<td><a href="#" onclick="chessObj.move(1);return false"><img src="demo-images/demo-4-button-forward.png"></a></td>
+				<td><a href="#" onclick="chessObj.moveToEnd();return false"><img src="demo-images/demo-4-button-toend.png"></a></td>
+				<td><a href="#" onclick="chessObj.autoPlay();return false"><img src="demo-images/demo-4-button-play.png"></a></td>
+				<td><a href="#" onclick="chessObj.stopAutoPlay();return false"><img src="demo-images/demo-4-button-stop.png"></a></td>
+				<td><a href="#" onclick="chessObj.flip();return false"><img src="demo-images/demo-4-button-flip.png"></a></td>
+			</tr>
+		</table>
+	</div>
+	<div id="activeComment">
+		Comments will appear here.
+	</div>
+</div>
+
+<script type="text/javascript">
+var chessObj = new DHTMLGoodies.Chess({
+		elMovesInTableMaxMovesPerTable:20,
+		elMovesInTable:['moves1','moves2','moves3','moves4'],
+		elActiveComment:'activeComment',
+		sound:true,
+		bgImageDarkSquares:'demo-images/piece-bg-60-wood2-dark.png',
+		bgImageLightSquares:'demo-images/piece-bg-60-wood2-light.png',
+		animationSpeed:0.3,
+		autoplayDelayBeforeComments:3,
+		stopAutoplayBeforeComments:true,
+		parentRef:'board',
+		pgnFile:'pgn/greatgames.pgn',
+		chessSet:'alphapale',
+		squareSize:60,
+		elActiveMove:'activeMove',
+		elGameAttributes:{
+			white:'labelWhite',
+			black:'labelBlack',
+			event:'labelEvent',
+			result:'labelResult',
+			WhiteElo:'labelWhiteElo',
+			BlackElo:'labelBlackElo',
+			date:'labelDate',
+			round:'labelRound',
+			site:'labelSite'
+		}
+} );
+chessObj.__createDefaultPieces();
+chessObj.displayGameListInSelect('gameListSelect');
+chessObj.showGame(0);
+</script>
+</body>
+</html>
+

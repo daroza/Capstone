@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>Chess Tactic Training - 1001 brill</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css"></link>
+    <style type="text/css">
+	#loadingDiv{
+		position:absolute;
+		padding-top:5px;
+		left:88px;
+		top:230px;
+		width:250px;
+		height:80px;
+		text-align:center;
+		border:1px solid #000;
+		background-color:#FFF;
+		z-index:100000;
+		line-height:45px;
+		font-size:0.9em;
+        color:#000;
+
+	}
+    div.ChessMoveIndicator{
+        border:3px solid #F9F340;
+        opacity:0.5;
+        filter:alpha(opacity=50);
+    }
+	#loadingDiv div{
+		height:30px;
+	}
+	#header{
+		margin-top:5px;
+		width:450px;
+		height:30px;
+		position:relative;
+		clear:both;
+	}
+.ChessBoardFrame45{
+    margin-left:10px;
+}
+	#hint{
+
+		color:#FFF;
+
+	}
+	#hint a{
+		color:white;
+	}
+	#hintInner{
+		color:yellow;
+	}
+	#gameInfo{
+		font-size:1.2em;
+		line-height:30px;
+		color:#FFF;
+		font-weight:bold;
+		width:400px;
+
+
+	}
+	#hintContainer{
+		position:relative;
+        color:#FFF;
+		clear:both;
+		width:400px;
+		height:25px;
+	}
+    a{
+        color:#FFF;
+    }
+    .ChessBoardLabel{
+        color:#EBDFB5;
+    }
+    #boardContainer{
+        padding-left:13px;
+        padding-top:22px;
+        width:410px;
+        height:405px;
+        float:left;
+        background-image:url('demo-images/board-bg-medium-wood-400.jpg');
+        background-repeat:no-repeat;
+    }
+    body{
+        font-family:Trebuchet MS;
+        background-color:#352F23;
+        margin-top:3px;
+        color:#FFF;
+    }
+    </style>
+    <script type="text/javascript" src="js/external/mootools-core-1.3-full-compat.js"></script>
+	<script type="text/javascript" src="js/chess.js"></script>
+	<script type="text/javascript">
+	var slideShowStarted = false;
+	var gameIndex;
+	function initTraining()
+	{
+		document.getElementById('loadingDiv').style.display='none';
+		document.getElementById('hintInner').innerHTML = '&nbsp;';
+		var result = chessObj.getResult();
+		chessObj.setDragAndDropColor(chessObj.getStartColor());
+
+
+		var start = chessObj.getStartColor();
+		var gameIndex = chessObj.getCurrentGameIndex();
+		document.getElementById('gameInfo').innerHTML = '#' + (gameIndex+1) + ': ' + start + ' to move and win';
+	}
+	function switchGame()
+	{
+
+		if(slideShowStarted){
+            document.getElementById('hintInner').innerHTML='Well done - problem solved.';
+			setTimeout('displayLoadMessage()',1000);
+			setTimeout("chessObj.showRandomGame()",2500);	// Wait two seconds before displaying next game
+		}else{
+			chessObj.showRandomGame();	// Show it immidieately if it's the first game
+			slideShowStarted=true;
+		}
+	}
+	function giveMeAHint()
+	{
+		document.getElementById('hintInner').innerHTML = 'Try ' + chessObj.getNextMove();
+	}
+	function displayLoadMessage()
+	{
+		document.getElementById('loadingDiv').style.display='block';
+	}
+	function correctMove()
+	{
+		document.getElementById('hintInner').innerHTML = 'Good move';
+	}
+	function wrongMove()
+	{
+		document.getElementById('hintInner').innerHTML = 'Sorry - that was wrong - please try again';
+	}
+	</script>
+</head>
+<body>
+<div id="header"><div id="gameInfo"></div></div>
+<a href="#" onclick="giveMeAHint();return false">Tell me the move</a>
+<div id="hintContainer"><span id="hintInner"></span></div>
+
+<div id="mainContainer" style="width:440px">
+    <div id="leftColumn" style="width:440px;float:left">
+	<div id="players"></div>
+	<div id="boardContainer">
+		<div id="board"></div>
+	</div>
+
+    </div>
+
+<a href="http://www.dhtmlgoodies.com/index.html?whichScript=dhtml-chess">Download DHTML Chess from DHTMLGoodies.com</a>
+</div>
+<div id="loadingDiv">
+    <div><img src="demo-images/ajax-loader-dark-gray.gif"></div>
+    <div>Loading game - please wait</div>
+</div>
+<script type="text/javascript">
+var chessObj = new DG.Chess({
+    behaviour : {
+        animationTime : 0.1,
+        autoplay : {
+            delay : 1
+        }
+    },
+    layout : {
+        squareSize : 45,
+        chessSet : 'alphapale',
+        bgImageDarkSquares:'demo-images/piece-bg-60-wood2-dark.png',
+        bgImageLightSquares:'demo-images/piece-bg-60-wood2-light.png'
+    },
+    els : {
+        parent : 'board',
+        movesInGame : 'divMoves',
+        playerNames : 'players',
+        currentMove : 'activeMove',
+        gameAttributes: {
+            round:'details_round',
+            white:'details_white',
+            black:'details_black',
+            event:'details_event',
+            result:'details_result',
+            WhiteElo:'details_white_elo',
+            BlackElo:'details_black_elo',
+            date:'details_date'
+        }
+    },
+    listeners : {
+        correctmove : correctMove,
+        wrongemove : wrongMove,
+        beforeloadgame : displayLoadMessage,
+        loadgame : initTraining,
+        afterlastmove : switchGame
+    },
+	pgnFile:'1001-brilliant-checkmates.pgn'
+
+} );
+
+switchGame();
+</script>
+</body>
+</html>
+

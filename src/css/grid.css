@@ -1,0 +1,413 @@
+/************************************************************************************************************
+DHTMLGoodies Grid
+Copyright (C) October 2011  DTHMLGoodies.com, Alf Magne Kalleland
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+Dhtmlgoodies.com., hereby disclaims all copyright interest in this script
+written by Alf Magne Kalleland.
+
+Alf Magne Kalleland, 2011
+Owner of DHTMLgoodies.com
+
+************************************************************************************************************/
+    .DG-grid{
+
+    }
+    .DG-dashboard-resize-handle {
+        opacity:0.1;
+        filter:alpha(opacity=10);
+        background-color:#AAA;
+        width:5px;
+    }
+    div.DG-resize-handle-over{
+        opacity:0.5;
+        filter:alpha(opacity=50);
+    }
+    div.DG-resize-handle-active{
+         opacity:1;
+        filter:alpha(opacity=100);
+    }
+
+    .DG-dashboard-item{
+        height:100px;
+        border:1px solid #000;
+        background-color:#eeeee8;
+        margin-bottom:10px;
+        /*
+        box-shadow:3px 3px 8px #555;
+        */
+        overflow:hidden;
+        position: relative;
+    }
+
+    .DG-dashboard-item, .DG-dashboard-item-shim, .DG-dashboard-insertion-marker{
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+    }
+
+    .DG-dashboard-item-titlebar{
+        width:100%;
+        height:25px;
+        overflow:hidden;
+        position: relative;
+        background-image:url('../images/item-titlebar-bg.png');
+        background-color:#255e99;
+    }
+    .DG-dashboard-item-shim {
+        background-color:#CCC;
+        box-shadow:3px 3px 8px #555;
+        position:absolute;
+        opacity:0.5;
+        filter:alpha(opacity=50);
+        text-align:left;
+
+    }
+
+    .DG-dashboard-item-content {
+        overflow-y:auto;
+        position:relative;
+        font-size:0.9em;
+        padding:3px;
+
+    }
+    .DG-grid .DG-dashboard-item-content {
+        padding-top:0px;
+    }
+    .DG-dashboard-item-status-bar{
+        height:18px;
+        border-top:1px solid #AAA;
+        position:relative;
+    }
+    .DG-dashboard-item-status-bar div{
+        float:left;
+        padding-left:3px;
+    }
+    .DG-dashboard-item-status-bar-resize{
+        background-repeat:no-repeat;
+        background-position:bottom left;
+        position:absolute;
+        bottom:0px;
+        height:7px;
+        width:100%;
+        cursor: row-resize;
+        z-index:1550;
+    }
+    .DG-dashboard-item-status-bar-icon{
+        position:relative;
+        left:2px;
+        top:0px;
+        background-repeat:no-repeat;
+        background-position:center center;
+        height:100%;
+        width:20px;
+    }
+    .DG-dashboard-item-status-bar-text{
+        position: relative;
+
+        line-height:18px;
+        height:100%;
+        font-family:arial;
+        font-size:0.8em;
+        overflow:hidden;
+        white-space: nowrap;
+        color:#666;
+    }
+    .DG-dashboard-item-titlebar-icon{
+        position: absolute;
+        left:1px;
+        width:20px;
+        height:100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    .DG-dashboard-item-titlebar-title{
+        position:absolute;
+        margin-left:3px;
+        height:100%;
+        font-family:arial;
+        font-size:0.8em;
+        font-weight:bold;
+        line-height:23px;
+        color:#FFF;
+    }
+    .DG-dashboard-item-titlebar-controls{
+        border:1px solid #EEEEE8;
+        border-top:0px;
+        border-radius:3px;
+        position:absolute;
+        right:3px;
+        width:50px;
+        top:-2px;
+        height:15px;
+    }
+    .DG-dashboard-item-titlebar-controls-button{
+        width:15px;
+        float:left;
+        height:100%;
+        background-position:center center;
+        background-repeat: no-repeat;
+        cursor:pointer;
+    }
+    .DG-dashboard-item-titlebar-controls-minimize{
+        background-image:url('../images/minimize.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-minimize-over{
+        background-image:url('../images/minimize-over.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-maximize{
+        background-image:url('../images/maximize.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-maximize-over{
+        background-image:url('../images/maximize-over.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-close{
+        background-image:url('../images/close.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-close-over{
+        background-image:url('../images/close-over.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-menu{
+        background-image:url('../images/dropdown-menu.gif');
+    }
+    .DG-dashboard-item-titlebar-controls-menu-over{
+        background-image:url('../images/dropdown-menu-over.gif');
+    }
+    .DG-dashboard-insertion-marker {
+        position: relative;
+        border:1px solid #AAA;
+
+        height:100%;
+        margin-bottom:8px;
+        background-color:white;
+        background-image : url(../images/pattern-green.gif);
+    }
+
+    .DG-dashboard-menu{
+        position: absolute;
+        background-color:#FFF;
+        border:1px solid #000;
+
+        width:100px;
+        z-index: 1000;
+        font-family: arial;
+        font-size:0.8em;
+        padding:2px;
+    }
+    .DG-dashboard-menu-item{
+        padding:2px;
+        height:20px;
+        line-height:20px;
+        overflow:hidden;
+        border-radius: 2px;
+        position: relative;
+        border:1px solid transparent;
+    }
+    .DG-dashboard-menu-item-over{
+        background-color:#CCC;
+        border-radius:3px;
+        border:1px solid #555;
+
+
+    }
+
+    .DG-dashboard-menu-item-disabled{
+        opacity : 0.5;
+        filter:alpha(opacity=50);
+    }
+
+    .DG-dashboard-menu-item, .DG-dashboard-menu-item div{
+        cursor: pointer;
+    }
+    .DG-dashboard-menu-item-icon {
+        position: absolute;
+        left:0px;
+        width:20px;
+        height:20px;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    .DG-dashboard-menu-item-text {
+        position: absolute;
+        left:20px;
+        white-space: no-wrap;
+        cursor:pointer;
+    }
+
+    /* GRID MODULE */
+
+   .DG-grid div{
+        font-family: arial;
+        font-size:13px;
+        -moz-user-select:none;
+    }
+
+    .DG-grid-header-container{
+        height:31px;
+        line-height:30px;
+        background-color:#eeeee8;
+        position:relative;
+    }
+    .DG-grid-header-cell{
+        position:absolute;
+        overflow:hidden;
+        padding-left:5px;
+        padding-right:5px;
+        border-right:1px solid #CCC;
+        border-bottom:1px solid #EEE;
+        height:30px;
+        cursor: default;
+    }
+    .DG-grid-header-cell-over{
+        border-bottom:1px solid #CCC;
+    }
+
+    .DG-component-content-grid{
+        padding:0px;
+
+
+    }
+    .DG-grid-data-cell-menu{
+        position:absolute;
+        right:0px;
+        top:0px;
+        height:100%;
+        width:14px;
+        display: none;
+        border-left:1px solid #CCC;
+        background-color:#EEE;
+        background-image:url('../images/grid-col-header-menu.gif');
+        background-repeat:no-repeat;
+        background-position: center center;
+        cursor: pointer;
+    }
+
+    .DG-grid-header-cell-over .DG-grid-data-cell-menu{
+        display : block;
+    }
+
+    .DG-grid-header-cell-text{
+        white-space:nowrap;
+        padding-right:12px;
+        background-repeat:no-repeat;
+        background-position: right center;
+    }
+    .DG-grid-header-cell-text-sort-asc{
+        background-image:url('../images/grid-sort-asc.gif');
+    }
+    .DG-grid-header-cell-text-sort-desc{
+        background-image:url('../images/grid-sort-desc.gif');
+    }
+    .DG-grid-resize-handle{
+        background-color:transparent;
+        width:5px;
+        border-left:1px solid #000;
+        opacity:0;
+        filter:alpha(opacity=0);
+        margin-left:-1px;
+
+    }
+
+    .DG-grid-resize-handle-over{
+
+    }
+
+    .DG-grid-data-container{
+        position: relative;
+
+    }
+
+    .DG-grid-data-column {
+        position:absolute;
+        overflow:hidden;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .DG-grid-data-column-right .DG-grid-data-cell, .DG-grid-data-last-column-right .DG-grid-data-cell{
+        float:right;
+        text-align:right;
+        padding-right:6px;
+    }
+    .DG-grid-data-last-column-right .DG-grid-data-cell {
+        padding-right:26px;
+    }
+
+    .DG-grid-data-cell {
+        width:1000px;
+        height:25px;
+        line-height:25px;
+        position: relative;
+        padding-left:5px;
+    },
+
+    .DG-grid-data-cell-text{
+        white-space:nowrap;
+    }
+
+    .DG-grid-data-odd-row {
+
+    }
+    .DG-grid-data-even-row{
+        background-color:#DDD;
+    }
+    .DG-grid-movable-shim{
+        opacity: 1;
+        filter: null;
+        background-color:#FFF;
+        line-height:30px;
+        font-family:arial;
+        padding-left:5px;
+        font-size:12px;
+        z-index:5000;
+    }
+
+    div.DG-grid-movable-insertion-marker{
+        background-image: url('../images/grid-col-move-insert-marker.gif');
+        background-repeat:no-repeat;
+        width:9px;
+        height:31px;
+        position:absolute;
+        background-color:transparent;
+        border:0px;
+        margin-left:-4px;
+        z-index:4000;
+    }
+
+    .DG-grid .DG-dashboard-item-content {
+        padding-top:0px;
+    }
+
+    .DG-grid a{
+        color : blue;
+    }
+
+    .DG-dashboard-item-load-message{
+        position: absolute;
+        left:50%;
+        top:50%;
+        margin-top:-10px;
+        width: 150px;
+        margin-left:-75px;
+        background-image:url('../images/ajax-loader.gif');
+        background-repeat:no-repeat;
+        background-position: 5px center;
+        padding-left:25px;
+        height: 30px;
+        line-height:30px;
+        border:1px solid #999;
+        border-radius : 5px;
+        z-index: 100;
+        background-color:#FFF;
+    }

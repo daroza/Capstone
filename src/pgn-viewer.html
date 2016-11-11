@@ -1,0 +1,295 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>DHTML Chess - pgn viewer</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css"></link>
+    <script type="text/javascript" src="js/external/mootools-core-1.3-full-compat.js"></script>
+	<script type="text/javascript" src="js/chess.js"></script>
+	<script type="text/javascript" src="js/dg-grid-all.js"></script>
+
+
+	<link rel="stylesheet" href="css/pgn-viewer.css" type="text/css">
+
+	<link rel="stylesheet" href="css/grid.css" type="text/css">
+    <style type="text/css">
+
+
+    .DG-grid{
+        border-radius : 5px;
+    }
+    .DG-grid-data-odd-row{
+        background-color:#FFF;
+    }
+    .DG-grid-data-even-row{
+        background-color:#FFF;
+    }
+    .DG-grid-data-cell{
+        border-bottom:1px solid #DDD;
+    }
+
+    </style>
+	<script type="text/javascript">
+	if(!window.$)window.$ = function(e) { return document.getElementById(e); };
+	function showDetails(gameDetails){
+        showHideTab('tabMoves')
+	}
+    function showGames(){
+        showHideTab('tabGames')
+    }
+    function showHideTab(el){
+        els = {
+            'tabMoves' : 'divMovesContainer',
+            'tabGames' : 'listOfGames',
+            'tabPgn' : 'pgnFiles'
+        }
+        for(var key in els){
+            $(key).removeClass('activeTab');
+            $(els[key]).setStyle('display','none');
+        }
+
+        $(el).addClass('activeTab');
+        $(els[el]).setStyle('display','block');
+   
+    }
+	</script>
+</head>
+<body>
+<div id="mainContainer" style="margin-top:10px">
+    <div id="leftColumn" style="width:440px;float:left">
+	<div id="players"></div>
+	<div id="boardContainer">
+		<div id="board"></div>
+	</div>
+    <div id="buttons">
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-tostart-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-tostart.gif'" onclick="chessObj.moveToStart();return false"><img src="demo-images/button-tostart.gif"></a>
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-back-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-back.gif'" onclick="chessObj.move(-1);return false"><img src="demo-images/button-back.gif"></a>
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-forward-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-forward.gif'" onclick="chessObj.move(1);return false"><img src="demo-images/button-forward.gif"></a>
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-toend-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-toend.gif'" onclick="chessObj.moveToEnd();return false"><img src="demo-images/button-toend.gif"></a>
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-play-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-play.gif'" onclick="chessObj.autoPlay();return false"><img src="demo-images/button-play.gif"></a>
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-pause-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-pause.gif'" onclick="chessObj.stopAutoPlay();return false"><img src="demo-images/button-pause.gif"></a>
+        <a href="#" onmouseover="this.getElements('img')[0].src='demo-images/button-flip-over.gif'" onmouseout="this.getElements('img')[0].src='demo-images/button-flip.gif'" onclick="chessObj.flip();return false"><img src="demo-images/button-flip.gif"></a>
+    </div>
+    </div>
+	<div id="rightColumn">
+        <div>
+            <div class="tab" id="tabMoves" onclick="showHideTab(this.id)">Moves</div>
+            <div class="tab activeTab" id="tabGames" onclick="showHideTab(this.id)">Games</div>
+            <div class="tab" id="tabPgn" onclick="showHideTab(this.id)">PGN</div>
+            <div id="gameListContainer" style="clear:both">
+                <div id="divMovesContainer" style="display:none">
+                    <table cellpadding="1" cellspacing="0" style="margin-bottom:10px">
+                        <tr><td><b>White:</b></td><td><span id="details_white"></span>&nbsp;<span id="details_white_elo"></span></td></tr>
+                        <tr><td><b>Black:</b></td><td><span id="details_black"></span>&nbsp;<span id="details_black_elo"></span></td></tr>
+                        <tr><td><b>Result:</b></td><td id="details_result"></td></tr>
+                        <tr><td><b>Event:</b></td><td id="details_event"></td></tr>
+                        <tr><td><b>Date:</b></td><td id="details_date"></td></tr>
+                     </table>
+                    <div id="divMoves"></div>
+
+                </div>
+                <div id="listOfGames">
+                </div>
+                <div id="pgnFiles" style="display:none">
+					<table id="listOfPgnFiles" cellspacing=0 cellpadding=2>
+						<thead>
+							<tr>
+								<td><b>Available pgn files:</b></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('Lasker.pgn');return false">Lasker.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('tactic1.pgn');return false">tactic1.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('fischer.pgn');return false">fischer.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('Nimzowitsch.pgn');return false">Nimzowitsch.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('greatgames.pgn');return false">greatgames.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('Morphy.pgn');return false">Morphy.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('Tal.pgn');return false">Some of Tal's greatest games</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('tactics1-17.pgn');return false">tactics1-17.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('mating-patterns-1.pgn');return false">mating-patterns-1.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('otherplayers.pgn');return false">otherplayers.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('CURIO.PGN');return false">CURIO.PGN</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('KASBLITZ.PGN');return false">KASBLITZ.PGN</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('FANT100.PGN');return false">FANT100.PGN</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('1001-brilliant-checkmates.pgn');return false">1001-brilliant-checkmates.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('winning-chess-sacrifices-and-combinations.pgn');return false">winning-chess-sacrifices-and-combinations.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('topalov-kamsky.pgn');return false">topalov-kamsky.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('carlsen-kamsky.pgn');return false">carlsen-kamsky.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('topalov-kramnik-elista.pgn');return false">topalov-kramnik-elista.pgn</a></td>
+							</tr>
+                            <tr>
+								<td><a href="#" onclick="chessObj.setPgn('Alekhine.pgn');return false">Alekhine.pgn</a></td>
+							</tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+function clearGrid(){
+    grid.setStatusText('');
+    grid.deleteAllRecords();
+}
+function showInGrid(json){
+
+    grid.addRecords(json.games);
+}
+
+function loadGames(){
+    chessObj.loadGames();
+    showGames();
+}
+var chessObj = new DG.Chess({
+    behaviour : {
+        animationTime : 0.1,
+        autoplay : {
+            delay : 1
+        }
+    },
+    layout : {
+        squareSize : 45,
+        chessSet : 'alphapale',
+        bgImageDarkSquares:'demo-images/piece-bg-60-wood2-dark.png',
+        bgImageLightSquares:'demo-images/piece-bg-60-wood2-light.png'
+    },
+    els : {
+        parent : 'board',
+        movesInGame : 'divMoves',
+        playerNames : 'players',
+        currentMove : 'activeMove',
+        gameAttributes: {
+            round:'details_round',
+            white:'details_white',
+            black:'details_black',
+            event:'details_event',
+            result:'details_result',
+            WhiteElo:'details_white_elo',
+            BlackElo:'details_black_elo',
+            date:'details_date'
+        }
+    },
+    listeners : {
+        'loadgame' : showDetails,
+        'newpgn' : loadGames,
+        'beforeloadgames' : clearGrid,
+        'loadgames' : showInGrid
+    },
+	pgnFile:'greatgames.pgn'
+
+} );
+//chessObj.displayGameListInTable('gameListTable','view,white,black,result',{ jsObject:"chessObj",viewGameLink:'View' });
+//createScrollTable('gameListTable','620','580');
+
+var grid = new DG.Grid({
+    height : 570,
+    width : 630,
+    title : 'Game list',
+    titleBar : true,
+    stretch : true,
+    statusBar : {
+        visible : true
+    },
+    behaviour : {
+        closable : false,
+        resizable : false,
+        minimizable : false
+    },
+    els :{
+        parent : 'listOfGames'
+    },
+    listeners : {
+        showGame : function(obj, record, index){
+            chessObj.showGame(index);
+        },
+        'add' : function(obj, gridObj){
+            gridObj.setStatusText('Number of games: ' + gridObj.getCountRows());
+        }
+    },
+    columnConfig : [
+        {
+            event : 'showGame',
+            txt : 'View',
+            heading : 'View',
+            resizable : false,
+            width : 40
+        },
+        {
+            heading : 'White',
+            key : 'white',
+            sortable : true,
+            width : 150
+        },
+        {
+            heading : 'Black',
+            key : 'black',
+            sortable : true,
+            width : 150
+        },
+        {
+            heading : 'Res',
+            key : 'result',
+            width : 100,
+            sortable : true
+        },
+        {
+            heading : 'Date',
+            key : 'date',
+            width : 100,
+            hidden : true,
+            removable : true
+        },
+        {
+            heading : 'Last moves',
+            key : 'lastmoves',
+            width : 100,
+            hidden : false,
+            removable : true
+        }
+    ]    
+});
+
+chessObj.loadGames();
+
+</script>
+</body>
+</html>
+

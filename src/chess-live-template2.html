@@ -1,0 +1,147 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>DHTML Chess - template for live game coverage</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css"></link>
+	<script type="text/javascript" src="js/external/mootools-core-1.3-full-compat.js"></script>
+	<script type="text/javascript" src="js/chess.js"></script>
+
+	<script type="text/javascript" src="js/scroll-table.js"></script>
+	<link rel="stylesheet" href="css/chess-live-2.css" type="text/css">
+	<link rel="stylesheet" href="css/scroll-table.css" type="text/css">
+	<script type="text/javascript">
+	if(!window.$)window.$ = function(e) { return document.getElementById(e); };
+	function showDetails(gameDetails){
+		showHideDetails('divGameDetails');
+	}
+	function showHideDetails(whichDiv){
+		if(whichDiv=='divBoardOptions'){
+			document.getElementById('divBoardOptions').className = 'tabDetails tabDetailsActive';
+			document.getElementById('divGameDetails').className = 'tabDetails tabDetailsInactive';
+			document.getElementById('boardOptions').style.display='block';
+			document.getElementById('gameDetails').style.display='none';
+
+		}else{
+			document.getElementById('divBoardOptions').className = 'tabDetails tabDetailsInactive';
+			document.getElementById('divGameDetails').className = 'tabDetails tabDetailsActive';
+			document.getElementById('boardOptions').style.display='none';
+			document.getElementById('gameDetails').style.display='block';
+		}
+		chessObj.moveToEnd();
+	}
+	</script>
+</head>
+<body>
+<div id="mainContainer">
+	<div id="players"></div>
+	<div id="boardContainer">
+		<div id="board"></div>
+	</div>
+	<div id="rightColumn">
+		<div id="gameListContainer">
+
+			<!-- This div displays move - it will be made visible by a callback sent to the constructor of the chessObj -->
+			<div id="moveTab">
+				<div id="divMoves">
+				</div>
+				<div id="buttons">
+					<input type="button" value="<<" onclick="chessObj.moveToStart()">
+					<input type="button" value="<" onclick="chessObj.move(-1)">
+					<input type="button" value=">" onclick="chessObj.move(1)">
+					<input type="button" value=">>" onclick="chessObj.moveToEnd(1)">
+					<input type="button" value="Play" onclick="chessObj.autoPlay()">
+					<input type="button" value="Stop" onclick="chessObj.stopAutoPlay()">
+				</div>
+				<div id="tabOptions">
+					<div id="divGameDetails" onclick="showHideDetails('divGameDetails')" class="tabDetails tabDetailsInactive">Game details</div>
+					<div id="divBoardOptions" onclick="showHideDetails('divBoardOptions')" class="tabDetails tabDetailsActive">Board options</div>
+				</div>
+				<div id="options">
+					<div id="boardOptions">
+						<a href="#" onclick="chessObj.flip();return false">Flip board</a>
+						<p><b>Chess set</b></p>
+							<a href="#" onclick="chessObj.setChessSet('merida');return false">Merida</a>|
+							<a href="#" onclick="chessObj.setChessSet('motif');return false">motif</a>|
+							<a href="#" onclick="chessObj.setChessSet('alpha');return false">alpha</a>|
+							<a href="#" onclick="chessObj.setChessSet('alphapale');return false">alphapale</a>|
+							<a href="#" onclick="chessObj.setChessSet('cases');return false">cases</a>|
+							<a href="#" onclick="chessObj.setChessSet('smart');return false">smart</a>|
+							<a href="#" onclick="chessObj.setChessSet('traveler');return false">traveler</a>|
+							<a href="#" onclick="chessObj.setChessSet('leipzig');return false">leipzig</a><br>
+						<p><b>Board size</b></p>
+						<a href="#" onclick="chessObj.setSquareSize(30);return false">Small</a> |
+						<a href="#" onclick="chessObj.setSquareSize(45);return false">Medium</a> |
+						<a href="#" onclick="chessObj.setSquareSize(60);return false">Large</a>
+					</div>
+					<div id="gameDetails" style="display:none;clear:both">
+						<table cellpadding="1" cellspacing="0">
+							<tr><td><b>White:</b></td><td><span id="details_white"></span>&nbsp;<span id="details_white_elo"></span></td></tr>
+							<tr><td><b>Black:</b></td><td><span id="details_black"></span>&nbsp;<span id="details_black_elo"></span></td></tr>
+							<tr><td><b>Result:</b></td><td id="details_result"></td></tr>
+							<tr><td><b>Event:</b></td><td id="details_event"></td></tr>
+							<tr><td><b>Date:</b></td><td id="details_date"></td></tr>
+							<tr><td><b>Round:</b></td><td id="details_round"></td></tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="listOfGames">
+	<div id="gameList" style="">
+		<TABLE id="gameListTable" cellspacing=0 cellpadding=2>
+		  		<thead>
+				<tr>
+					<td>View</td>
+					<td>White</td>
+					<td>Black</td>
+					<td>Res</td>
+				</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</TABLE>
+	</div>
+</div>
+<script type="text/javascript">
+var chessObj = new DHTMLGoodies.Chess({
+
+	sound:1,
+	liveUpdateInterval:15,	/* Update every 30 seconds, i.e. live games */
+	bgImageDarkSquares:'demo-images/piece-bg-60-wood2-dark.png',
+	bgImageLightSquares:'demo-images/piece-bg-60-wood2-light.png',
+	animationSpeed:1,
+	autoplayDelayBeforeComments:3,
+	stopAutoplayBeforeComments:true,
+	callbackOnGameLoaded:'showDetails',
+	parentRef:'board',
+	pgnFile:'pgn/live-games.pgn',
+	chessSet:'alphapale',
+	squareSize:60,
+	serverFile:'chess.php',
+	elMovesInline:'divMoves',
+	elPlayerNames:'players',
+	elActiveMove:'activeMove',
+	elGameAttributes:{
+		round:'details_round',
+		white:'details_white',
+		black:'details_black',
+		event:'details_event',
+		result:'details_result',
+		WhiteElo:'details_white_elo',
+		BlackElo:'details_black_elo',
+		date:'details_date'
+	}
+} );
+chessObj.__createDefaultPieces();
+chessObj.displayGameListInTable('gameListTable','view,white,black,result',{ jsObject:"chessObj",viewGameLink:'View' });
+createScrollTable('gameListTable','913','147');
+
+</script>
+
+</body>
+</html>
+

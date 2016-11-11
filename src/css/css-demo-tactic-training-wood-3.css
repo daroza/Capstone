@@ -1,0 +1,97 @@
+	body{
+		background-color:#39302b;
+		margin:0px;
+		font-family:Trebuchet MS;
+	}
+	#board{
+		margin-left:20px;
+		width:655px;
+		height:645px;
+		background-image:url('../demo-images/board-bg-wood-3.jpg');
+		padding-left:16px;
+		padding-top:28px;
+		background-repeat:no-repeat;
+		
+	}
+
+	div.ChessBoardInner75{	
+		border:1px solid #3D3630;
+	}
+	div.ChessBoardFrame75{
+		background-color:#EBDFB5;
+		padding-left:4px;
+		padding:4px;	
+		border:1px solid #3D3630;	
+		width:602px;
+		height:602px;
+	}
+	div.ChessBoard75{
+		width:625px;
+		height:630px;
+	
+	}
+	#header{
+		margin-top:5px;
+		margin-left:10px;
+		width:650px;
+		height:30px;
+		position:relative;	
+		clear:both;
+	}
+	#hint{	
+		position:absolute;
+		color:#FFF;
+		right:0px;
+		top:0px;
+	}
+	#hint a{
+		color:white;
+	}
+	#hintInner{
+		color:yellow;
+	}
+	#gameInfo{
+		font-size:1.2em;
+		line-height:30px;
+		color:#FFF;
+		font-weight:bold;
+		width:400px;
+		padding-left:20px;
+		
+	}
+	#hintContainer{
+		position:relative;
+		clear:both;
+		width:650px;
+		height:25px;
+	}
+	#mainContainer{
+		position:relative;
+	}
+	.ChessBoardLabel{
+		color:#EBDFB5;
+	}
+	div.ChessMoveIndicator{
+		border:4px solid #F9F340;
+		opacity:0.5;
+		filter:alpha(opacity=50);
+
+	}
+	#loadingDiv{
+		position:absolute;
+		padding-top:5px;
+		left:218px;
+		top:300px;
+		width:250px;
+		height:80px;
+		text-align:center;
+		border:1px solid #000;
+		background-color:#FFF;
+		z-index:100000;
+		line-height:45px;
+		font-size:0.9em;
+
+	}
+	#loadingDiv div{
+		height:30px;
+	}

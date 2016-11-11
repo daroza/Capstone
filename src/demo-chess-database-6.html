@@ -1,0 +1,367 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>DHTML Chess - game database</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css?rnd=jan2008"></link>
+	<script type="text/javascript" src="js/external/mootools-core-1.3-full-compat.js"></script>
+	<script type="text/javascript" src="js/chess.js?rnd=jan2008"></script>
+    <script type="text/javascript" src="js/dg-grid-all.js"></script>
+	<link rel="stylesheet" href="css/demo-chess-database-6.css?rnd=jan2008" type="text/css">
+    <link rel="stylesheet" href="css/grid.css" type="text/css">
+    <style type="text/css">
+        .DG-dashboard-menu-item-icon input{
+            position:absolute;
+            left:1px;
+            width: auto;
+        }
+    </style>
+
+	<script type="text/javascript">
+	function showDetails(gameDetails){
+		// when called from callback event, gameDetails will contain information about the game.
+		document.getElementById('moveTab').style.display='block';
+		document.getElementById('gameList').style.display='none';
+		document.getElementById('pgnList').style.display='none';
+		document.getElementById('tabDetails').className = 'tabActive';
+		document.getElementById('tabGames').className = 'tabInactive';
+		document.getElementById('tabPgns').className = 'tabInactive';
+		showHideDetails('divGameDetails');
+	}
+	function showGames()
+	{
+		document.getElementById('moveTab').style.display='none';
+		document.getElementById('pgnList').style.display='none';
+		document.getElementById('gameList').style.display='block';
+		document.getElementById('tabGames').className = 'tabActive';
+		document.getElementById('tabDetails').className = 'tabInactive';
+		document.getElementById('tabPgns').className = 'tabInactive';
+	}
+	function showPgns()
+	{
+		document.getElementById('moveTab').style.display='none';
+		document.getElementById('gameList').style.display='none';
+		document.getElementById('pgnList').style.display='block';
+		document.getElementById('tabGames').className = 'tabInactive';
+		document.getElementById('tabDetails').className = 'tabInactive';
+		document.getElementById('tabPgns').className = 'tabActive';
+
+	}
+	function showHideDetails(whichDiv){
+		if(whichDiv=='divBoardOptions'){
+			document.getElementById('divBoardOptions').className = 'tabDetails tabDetailsActive';
+			document.getElementById('divGameDetails').className = 'tabDetails tabDetailsInactive';
+			document.getElementById('boardOptions').style.display='block';
+			document.getElementById('gameDetails').style.display='none';
+
+		}else{
+			document.getElementById('divBoardOptions').className = 'tabDetails tabDetailsInactive';
+			document.getElementById('divGameDetails').className = 'tabDetails tabDetailsActive';
+			document.getElementById('boardOptions').style.display='none';
+			document.getElementById('gameDetails').style.display='block';
+		}
+	}
+
+	function guessedWrongMove()
+	{
+		alert('sorry - that move was wrong');
+
+	}
+
+	function correctMove()
+	{
+
+
+	}
+
+
+
+	</script>
+</head>
+<body>
+<div id="mainContainer">
+	<div id="players"></div>
+	<div id="boardContainer">
+		<div id="board"></div>
+	</div>
+	<div id="rightColumn">
+		<div id="tabs">
+			<div id="tabDetails" onclick="showDetails()" class="tabInactive"><span>Details</span></div>
+			<div id="tabGames" onclick="showGames()" class="tabActive"><span>Games</span></div>
+			<div id="tabPgns" onclick="showPgns()" class="tabInactive"><span>PGN</span></div>
+
+		</div>
+		<div id="gameListContainer">
+			<div id="pgnList">
+				<div id="divListOfPgns">
+
+				</div>
+			</div>
+			<div id="gameList">
+
+			</div>
+			<!-- This div displays move - it will be made visible by a callback sent to the constructor of the chessObj -->
+			<div id="moveTab">
+				<div id="divMoves">
+				</div>
+				<div id="buttons">
+					<input type="button" value="<<" onclick="chessObj.moveToStart()">
+					<input type="button" value="<" onclick="chessObj.move(-1)">
+					<input type="button" value=">" onclick="chessObj.move(1)">
+					<input type="button" value=">>" onclick="chessObj.moveToEnd(1)">
+					<input type="button" value="Play" onclick="chessObj.autoPlay()">
+					<input type="button" value="Stop" onclick="chessObj.stopAutoPlay()">
+				</div>
+				<div id="tabOptions">
+					<div id="divGameDetails" onclick="showHideDetails('divGameDetails')" class="tabDetails tabDetailsInactive">Game details</div>
+					<div id="divBoardOptions" onclick="showHideDetails('divBoardOptions')" class="tabDetails tabDetailsActive">Board options</div>
+				</div>
+				<div id="options">
+					<div id="boardOptions">
+						<a href="#" onclick="chessObj.flip();return false">Flip board</a>
+						<p><b>Chess set</b></p>
+							<a href="#" onclick="chessObj.setChessSet('meridapale');return false">Merida</a>|
+							<a href="#" onclick="chessObj.setChessSet('motif');return false">motif</a>|
+							<a href="#" onclick="chessObj.setChessSet('alphapale');return false">alpha</a>|
+							<a href="#" onclick="chessObj.setChessSet('cases');return false">cases</a>|
+							<a href="#" onclick="chessObj.setChessSet('smart');return false">smart</a>|
+							<a href="#" onclick="chessObj.setChessSet('traveler');return false">traveler</a>|
+							<a href="#" onclick="chessObj.setChessSet('leipzig');return false">leipzig</a><br>
+						<p><b>Board size</b></p>
+						<a href="#" onclick="chessObj.setSquareSize(45);return false">Medium</a> |
+						<a href="#" onclick="chessObj.setSquareSize(60);return false">Large</a>
+					</div>
+					<div id="gameDetails" style="display:none;clear:both">
+						<table cellpadding="1" cellspacing="0">
+							<tr><td><b>White:</b></td><td><span id="details_white"></span>&nbsp;<span id="details_white_elo"></span></td></tr>
+							<tr><td><b>Black:</b></td><td><span id="details_black"></span>&nbsp;<span id="details_black_elo"></span></td></tr>
+							<tr><td><b>Result:</b></td><td id="details_result"></td></tr>
+							<tr><td><b>Event:</b></td><td id="details_event"></td></tr>
+							<tr><td><b>Date:</b></td><td id="details_date"></td></tr>
+							<tr><td><b>Round:</b></td><td id="details_round"></td></tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:15px">
+</div>
+<div id="debug"></div>
+<script type="text/javascript">
+var animationSpeed =1;
+if(navigator.userAgent.toLowerCase().indexOf('firefox')>=0) {	/* Firefox got a bug in the setTimeout and setInterval function which makes the animation flicker */
+	animationSpeed=0.1;
+}
+
+function clearGrid(){
+    grid.setStatusText('');
+    grid.deleteAllRecords();
+}
+function showInGrid(json){
+
+    grid.addRecords(json.games);
+}
+
+function loadGames(){
+    chessObj.loadGames();
+    showGames();
+}
+
+
+
+var chessObj = new DHTMLGoodies.Chess(
+	{
+        listeners : {
+            'loadgame' : showDetails,
+            'newpgn' : loadGames,
+            'beforeloadgames' : clearGrid,
+            'loadgames' : showInGrid
+        },
+		boardLabels : false,
+		sound:false,	/* No sound effects */
+		bgImageDarkSquares:'demo-images/piece-bg-60-mahogny.png',	/* Path to square background images */
+		bgImageLightSquares:'demo-images/piece-bg-60-light-maple.png',
+		animationSpeed:animationSpeed,	/* Speed of animation */
+		stopAutoplayBeforeComments:true,	/* Stop autoplay before comments */
+		callbackOnSwitchPgn:'loadGames',	/* Name of function to call when user switches pgn file */
+		callbackOnGameLoaded:'showDetails',	/* Name of function to call when a game is loaded from the server */
+		parentRef:'board',	/* Reference to <div id="board">, i.e. where the chess board will be inserted by the script */
+		pgnFile:'pgn/Morphy.pgn',	/* Default pgn file to open */
+		chessSet:'alphapale',	/* Chess set */
+		squareSize:60,	/* Size in pixel of each square, possible values: 15,30,45,60,75 */
+		serverFile:'chess.php',
+		elMovesInline:'divMoves',
+		elActivePgnFile:'divActivePgnFile',	/* if element with id "divActivePgnFile" exists on the page, name of currently displayed pgn file will be shown there */
+		elPlayerNames:'players',
+		elActiveMove:'activeMove',	/* Where to display active move, i.e. <div id="activeMove">.  */
+		elGameAttributes:{ /* Which game attributes to show, example, the pgn attribute "round" will be inserted into <span id="details_round"> */
+			round:'details_round',
+			white:'details_white',
+			black:'details_black',
+			event:'details_event',
+			result:'details_result',
+			WhiteElo:'details_white_elo',
+			BlackElo:'details_black_elo',
+			date:'details_date'
+		}
+	}
+);
+/* Insert list of games into element <table id="gameListTable">. Display the columns "view", "white", "black" and "result". Everything except "view" are properties from the pgn file */
+
+chessObj.showRandomGame(14);	/* Load first game in pgn file at once, 0 = first index */
+
+
+var grid = new DG.Grid({
+    height : 510,
+    width : 340,
+    title : 'Game list',
+    titleBar : true,
+    stretch : true,
+    statusBar : {
+        visible : true
+    },
+    behaviour : {
+        closable : false,
+        resizable : false,
+        minimizable : false
+    },
+    els :{
+        parent : 'gameList'
+    },
+    listeners : {
+        view : function(obj, index){
+            chessObj.showGame(index);
+        },
+        'add' : function(obj, gridObj){
+            gridObj.setStatusText('Number of games: ' + gridObj.getCountRows());
+        }
+    },
+    columnConfig : [
+        {
+            event : 'view',
+            txt : 'View',
+            heading : 'View',
+            resizable : false,
+            width : 40
+        },
+        {
+            heading : 'White',
+            key : 'white',
+            sortable : true,
+            width : 120
+        },
+        {
+            heading : 'Black',
+            key : 'black',
+            sortable : true,
+            width : 120
+        },
+        {
+            heading : 'Res',
+            key : 'result',
+            width : 80,
+            sortable : true
+        },
+        {
+            heading : 'Date',
+            key : 'date',
+            width : 100,
+            hidden : true,
+            removable : true
+        },
+        {
+            heading : 'Last moves',
+            key : 'lastmoves',
+            width : 100,
+            hidden : false,
+            removable : true
+        }
+    ]
+});
+
+var dataFiles = ["Lasker.pgn",
+    "tactic1.pgn",
+    "fischer.pgn",
+    "Nimzowitsch.pgn",
+    "greatgames.pgn",
+    "Morphy.pgn",
+    { 'label' : "Some of Tal's greatest games", 'file' : 'Tal.pgn' },
+    "tactics1-17.pgn",
+    "mating-patterns-1.pgn",
+    "otherplayers.pgn",
+    "CURIO.PGN",
+    "KASBLITZ.PGN",
+    "FANT100.PGN",
+    "1001-brilliant-checkmates.pgn",
+    "winning-chess-sacrifices-and-combinations.pgn",
+    "topalov-kamsky.pgn",
+    "carlsen-kamsky.pgn",
+    "topalov-kramnik-elista.pgn",
+    "perlepgn.pgn"
+];
+
+var dataObj = [];
+for(var i=0;i<dataFiles.length;i++){
+    if(dataFiles[i].label){
+         dataObj.push({
+            id : i,
+            fileLabel : dataFiles[i].label,
+            file : 'pgn/' + dataFiles[i].file
+        });
+    }else{
+        dataObj.push({
+            id : i,
+            fileLabel : dataFiles[i],
+            file : 'pgn/' + dataFiles[i]
+        });
+    }
+}
+
+var gridFiles = new DG.Grid({
+    id : 'gridFiles',
+    height : 510,
+    width : 340,
+    title : 'Game list',
+    titleBar : true,
+    stretch : true,
+    data : dataObj,
+    statusBar : {
+        visible : true
+    },
+    behaviour : {
+        closable : false,
+        resizable : false,
+        minimizable : false
+    },
+    els :{
+        parent : 'divListOfPgns'
+    },
+    listeners : {
+
+    },
+
+    columnConfig : [
+        {
+            heading : 'File',
+            key : 'fileLabel',
+            sortable : true,
+            width : 320,
+            renderer : function(val, obj){
+                return '<a href="#" onclick="chessObj.setPgn(\'pgn/' + obj.file + '\');return false">' + obj.fileLabel + '</a>';
+            }
+        }
+    ]
+});
+gridFiles.populateData();
+
+
+
+chessObj.loadGames();
+
+</script>
+
+
+</body>
+</html>
+

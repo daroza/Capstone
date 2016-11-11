@@ -1,0 +1,175 @@
+/* Css rules for board with 90x90 pixel squares */
+.ChessBoardInner90{		/* The actual chess board div "large size", i.e. 90x90 pixel squares */
+	width:720px;
+	height:720px;
+	border:1px solid #000;
+	top:0px;
+}
+
+.ChessBoard90{ /* Chess board for 90x90 pixel squares - total size of board including labels around the board (A-H,1-8) */ 
+	width:735px;
+	height:740px;
+	padding:0px;
+
+}
+.ChessPiece90{	/* 90x90 pixel chess pieces */
+	width:90px;
+	height:90px;
+	
+}
+
+/* Css rules for board with 75x75 pixel squares */
+.ChessBoardInner75{		/* The actual chess board div "large size", i.e. 75x75 pixel squares */
+	width:600px;
+	height:600px;
+	border:1px solid #000;
+	top:0px;
+}
+
+.ChessBoard75{ /* Chess board for 75x75 pixel squares - total size of board including labels around the board (A-H,1-8) */ 
+	width:615px;
+	height:620px;
+	padding:0px;
+
+}
+.ChessPiece75{	/* 75x75 pixel chess pieces */
+	width:75px;
+	height:75px;
+	
+}
+/* Css rules for board with 60x60 pixel squares */
+.ChessBoardInner60{		/* The actual chess board div "large size", i.e. 60x60 pixel squares */
+	width:480px;
+	height:480px;
+	border:1px solid #000;
+	top:0px;
+}
+
+.ChessBoard60{ /* Chess board for 60x60 pixel squares - total size of board including labels around the board (A-H,1-8) */ 
+	width:495px;
+	height:500px;
+	padding:0px;
+
+}
+.ChessPiece60{	/* 60x60 pixel chess pieces */
+	width:60px;
+	height:60px;
+	
+}
+.ChessBoardFrame75{
+    margin-left:15px;
+}
+
+/* Css rules for board with 45x45 pixel squares */
+.ChessBoardInner45{	/* The actual chess board div "medium size", i.e. 45x45 pixel squares */
+	width:360px;
+	height:360px;
+	border:1px solid #000;
+	top:0px;
+}
+
+.ChessBoard45{	/* Chess board for 45x45 pixel squares - total size of board including labels around the board (A-H,1-8) */ 
+	width:375px;
+	height:380px;
+	padding:0px;
+
+}
+.ChessPiece45{	/* 45x45 pixel chess pieces */
+	width:45px;
+	height:45px;
+}
+/* Css rules for board with 30x30 pixel squares */
+.ChessBoardInner30{	/* The actual chess board div */
+	width:240px;
+	height:240px;
+	border:1px solid #000;
+	top:0px;
+}
+
+.ChessBoard30{	/* Chess board for 30x30 pixel squares - total size of board including labels around the board (A-H,1-8) */
+	width:255px;
+	height:260px;
+	padding:0px;
+
+}
+
+.ChessBoardLabel{	/* Labels A-F, 1-8 around chess board */
+	font-weight:bold;
+	font-family:Trebuchet MS
+}
+
+.ChessBoardLabel45{	/* A-H,1-8 displayed at around the chess board */
+	font-size:0.9em;
+}
+/* The labels around the board are assigned to class "ChessBoardLabel ChessBoardLabel<size>", so the two rules above will be combined */
+
+
+
+.ChessMoveIndicator{	/* Square indicating where the last piece moved from and to */
+	border:3px solid red;
+}
+
+a.ActiveInlineChessMove{	/* How to highlight active chess move in the inline list of moves */
+	color:white;
+	background-color:#333;
+}
+
+.ActiveTableChessMove{	/* How to highlight active chess move in the list of moves - "Table view" */
+	color:white;
+	background-color:#333;
+}
+span.InlineChessComment{
+	font-style:normal;
+	color:#00F;
+	display:block;
+	clear:both;
+	font-size:0.8em;
+}
+
+.ActiveGameInTable{	/* Active game in list of games - table */
+	font-weight:bold;
+	background-color:#555;
+	color:#FFF;
+}
+.ActiveGameInTable a{ /* A tag inside active game in gamelist table */
+	color:#FFF;
+}
+
+.GameListOddRow{	/* List of games - odd rows in table */
+	background-color:#FFF;
+}
+.GameListEvenRow{	/* List of games - even row in table */
+	background-color:#E0E0E0;
+}
+
+.InlineChessVariationBlock{
+	color:#777;
+	display:block;
+}
+.InlineChessVariationBlock a{
+	color:#777;
+}
+a.ActiveInlineVariationChessMove{
+	color:white;
+	background-color:#00F;	
+}
+
+/* How to indicate displayed good, bad, suprise and questionable inline moves */
+.InlineChessMove_goodMove{	/* i.e. ! */
+	color:blue;
+}
+.InlineChessMove_badMove{	/* i.e. ? */
+	color:red;
+}
+.InlineChessMove_veryGoodMove{	/* i.e. !! */
+
+}
+.InlineChessMove_veryBadMove{	/* i.e. ?? */
+	color:red;
+}
+.InlineChessMove_supriseMove{	/* i.e. !? */
+
+}
+.InlineChessMove_questionableMove{	/* i.e. ?! */
+
+}

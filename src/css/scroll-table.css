@@ -1,0 +1,44 @@
+/* Start layout CSS */
+.tableWidget_headerCell{	/* General rules for both standard column header and mouse on header of sortable columns */
+	border-bottom:3px solid #C5C2B2;
+	border-right:1px solid #ACA899;
+	border-left:1px solid #FFF;	
+	background-color: #ECE9D8;
+	border-top:2px solid #ECE9D8;
+}
+.tableWidget td{
+	margin:0px;
+	padding:2px;
+	border-bottom:1px solid #EAE9E1;	/* Border bottom of table data cells */
+}
+
+.widget_tableDiv, .tableWidget tbody{
+	background-color:#FFF;
+}
+.tableWidget{
+	font-family:arial;
+	font-size:12px;	
+}
+/* End layout CSS */	
+.widget_tableDiv {
+	border:1px solid #ACA899;	/* Border around entire widget */
+	overflow:scroll;
+	overflow-y:scroll;
+	overflow:-moz-scrollbars-vertical;
+}
+html>body div.widget_tableDiv {
+	overflow: hidden;
+}
+.tableWidget thead{
+	position:relative;
+}
+.tableWidget thead tr{
+	position:relative;
+	top:0px;
+	bottom:0px;
+}
+.tableWidget .scrollingContent{
+	overflow-y:scroll;
+	overflow:-moz-scrollbars-vertical;
+	width:100%;
+}

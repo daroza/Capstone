@@ -1,0 +1,160 @@
+#mainContainer{
+	width:1080px;
+}
+#boardContainer{
+	padding-left:13px;
+	padding-top:22px;
+	width:410px;
+	height:405px;
+	float:left;
+	background-image:url('../demo-images/board-bg-medium-wood-400.jpg');
+	background-repeat:no-repeat;
+}
+.ChessBoardFrame45{
+    margin-left:10px;
+}
+#buttons{
+    margin-top:0px;
+	margin-left:15px;
+	clear:both;
+	height:20px;
+	width:453px;
+	font-size:0.8em;		
+}
+img{
+    border: 0px;
+}
+#rightColumn{
+	width:390px;
+	height:540px;
+	float:left;
+	position:relative;
+}
+/** 001 */
+#gameListContainer{
+	width:640px;
+	height:600px;
+	background-color:#DAC399;
+	background-repeat:repeat;
+	padding-top:5px;
+	padding-left:5px;
+}
+#divMovesContainer,#pgnFiles{
+	clear:both;
+	font-size:1.1em;
+
+	font-style:italic;
+	width:620px;
+	height:580px;
+	overflow:auto;
+	background-color:#DAC399;
+	margin-top:0px;
+	padding:5px;
+
+	border:1px solid #000;
+}
+#divMoves {
+    line-height:130%;
+}
+.InlineChessMove_plainMove{
+    white-space: nowrap;
+}
+
+.ChessBoardLabel{
+	color:#EBDFB5;
+}
+
+body{
+	font-family:Trebuchet MS;
+	background-color:#352F23;
+	margin-top:3px;
+}
+table{
+	font-size:0.8em;
+}
+/** 002 */
+
+#divMoves a{
+	text-decoration:none;
+
+}
+
+
+
+#players,#activeMove{
+	text-align:center;
+	clear:both;
+	font-size:1.1em;
+	font-weight:bold;
+	height:23px;
+	width:400px;
+	color:#DAC399;
+}
+a{
+	color:#77170D;
+	text-decoration:underline;
+}
+/** 003 */
+#listOfGames{
+	background-color:#DAC399;
+	background-repeat:repeat;
+	width:400px;
+	clear:both;
+    float:left;
+	padding:5px;
+}
+#gameList{
+	width:330px;
+	height:400px;
+}
+
+
+table,tr,td{
+	vertical-align:top;
+}
+
+#boardOptions,#gameDetails{
+	height:120px;
+}
+#gameDetails td{
+	font-size:12px;
+}
+
+td.tableWidget_headerCell{
+	background-color:#643D20;
+	color:white;
+	border-right:1px solid white;
+	border-left:1px solid #643D20;	
+	border-top:1px solid #643D20;
+	border-bottom:1px solid #643D20;	
+
+}
+div.widget_tableDiv{
+	border:1px solid #643D20;
+}
+div.ChessMoveIndicator{
+	border:3px solid #F9F340;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+
+.tab{
+    float:left;
+    margin-right:10px;
+    padding-left:3px;
+    padding-right:3px;
+    color:#dac399;
+    cursor:pointer;
+    border-top: 1px solid #dac399;
+    border-right: 1px solid #dac399;
+    border-left: 1px solid #dac399;
+
+}
+.activeTab{
+    background-color:#DAC399;
+    color:#000;
+}
+
+tr.ActiveGameInTable{ /* Active game in list of games */
+    background-color:#5c371c;
+}

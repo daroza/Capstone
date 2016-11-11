@@ -1,0 +1,243 @@
+#mainContainer{
+	width:980px;
+	
+}
+#boardContainer{
+	padding-left:28px;
+	padding-top:40px;
+	width:550px;
+	height:540px;
+	float:left;
+	background-image:url('../demo-images/board-bg-wood.jpg');
+	background-repeat:no-repeat;
+}
+
+#rightColumn{
+	width:390px;
+	height:540px;
+	float:left;
+	position:relative;
+}
+#gameListContainer{
+	width:390px;
+	height:540px;
+	background-image:url('../demo-images/bg-details.gif');
+	background-repeat:no-repeat;
+	padding-top:30px;
+	padding-left:10px;
+	
+}
+
+body{
+	font-family:Trebuchet MS;
+	background-color:#2f5e80;
+}
+table{
+	font-size:0.8em;
+}
+#divMoves{
+	clear:both;
+	font-size:0.9em;
+	font-style:italic;
+	width:330px;
+	height:290px;
+	overflow:auto;
+	
+	background-color:#FFF;
+	margin-top:10px;
+	padding:5px;
+	
+	line-height:130%;
+	
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	
+}
+#divMoves a{
+	text-decoration:none;
+}
+#options{
+	background-color:#FFF;
+	margin-top:0px;
+	padding:5px;
+	
+	border:1px solid #DDD;
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	
+	width:330px;	
+	font-size:0.8em;
+
+}
+
+#buttons{
+	margin-top:5px;
+	background-color:#DDD;
+	padding:5px;
+	clear:both;
+	border:1px solid #DDD;
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	height:20px;
+	width:330px;	
+	font-size:0.8em;		
+}
+#options p{
+	margin:0px;
+	margin-top:5px;
+}
+input{
+	width:50px;
+	margin-right:2px;
+	float:left;
+	border:1px solid #000;
+	background-color:#FFF;
+}
+#players,#activeMove{
+	text-align:center;
+	clear:both;
+	font-size:1.3em;
+	font-weight:bold;
+	height:30px;
+	width:550px;
+	color:#FFF;
+}
+a{
+	color:#363636;
+	text-decoration:underline;
+}
+#moveTab{
+	display:none;
+}
+#gameList{
+	width:330px;
+	height:540px;
+}
+#tabs{
+	position:absolute;
+	width:330px;
+	left:20px;
+	top:-13px;
+	z-index:100;
+}
+#tabs .tabInactive{
+	position:relative;
+	top:-2px;
+	background-image:url('../demo-images/tab-inactive.gif')
+	
+}
+#tabs .tabActive{
+	background-image:url('../demo-images/tab-active.gif');
+}
+#tabs div{
+	background-position:bottom left;
+	float:left;
+	background-repeat:no-repeat;
+	width:105px;
+	height:25px;
+	font-size:0.8em;
+	text-align:center;
+	line-height:25px;
+	cursor:pointer;
+}
+#tabs div span{
+	font-weight:bold;
+	display:block;
+}
+#tabs .tabInactive span{
+	padding-top:3px;
+}
+#tabs .tabActive span{
+	padding-top:1px;
+	color:#FFF;
+}
+#scrollDivGames{
+	overflow: auto; 
+	width: 330px; 
+	height: 490px;
+	border-left: 1px gray solid; 
+	border-bottom: 1px gray solid;
+	padding:0px;
+	margin: 0px;
+	background-color:#FFF
+}
+table,tr,td{
+	vertical-align:top;
+}
+
+#pgnList{
+	display:none;
+}
+#divListOfPgns{	/* Box where the actual pgn links are located */
+	width: 330px; 
+	height:480px;
+	background-color:#FFF;
+
+}
+
+#tabOptions{
+	margin-top:10px;
+	margin-left:10px;	
+	position:relative;
+	top:1px;
+	height:23px
+}
+
+.tabDetails{
+	padding:2px;
+	text-align:center;
+	width:100px;
+	margin-right:3px;
+	font-size:0.8em;
+	float:left;
+	cursor:pointer;
+	border:1px solid #000;
+	border-bottom:0px;
+	position:relative;
+}
+
+.tabDetailsActive{
+	background-color:#FFF;	
+}
+.tabDetailsInactive{
+	background-color:#CCC;
+	border-bottom:1px solid #000;
+	position:relative;
+	top:-1px;
+	margin-top:2px;
+	height:16px;
+}
+
+#boardOptions,#gameDetails{
+	height:120px;
+}
+#gameDetails td{
+	font-size:12px;
+}
+
+td.tableWidget_headerCell{
+	background-color:#676767;
+	color:#FFF;
+	border-right:1px solid #666;
+	border-left:1px solid #999;	
+	border-top:1px solid #999;
+	border-bottom:1px solid #999;	
+
+}
+div.widget_tableDiv{
+	border:1px solid #444;
+}
+div.ChessMoveIndicator{
+	border:3px solid #F9F340;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+
+div.ChessBoardInner60{
+	border:1px solid #70472a;
+	border-left:1px solid #54351f;
+	border-bottom:1px solid #54351f;
+}
+.ChessBoardFrame60{
+    margin-left:15px;
+}

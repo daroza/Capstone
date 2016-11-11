@@ -1,0 +1,272 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+	<title>DHTML Chess - game database</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="css/chess.css"></link>
+
+	<script type="text/javascript" src="js/chess.js"></script>
+
+	<script type="text/javascript" src="js/scroll-table.js"></script>
+	<link rel="stylesheet" href="css/demo-chess-database-3.css?rnd=feb2008" type="text/css">
+	<link rel="stylesheet" href="css/scroll-table.css" type="text/css">
+	<script type="text/javascript">
+	function showDetails(gameDetails){
+		// when called from callback event, gameDetails will contain information about the game.
+		document.getElementById('moveTab').style.display='block';
+		document.getElementById('gameList').style.display='none';
+		document.getElementById('pgnList').style.display='none';
+		document.getElementById('tabDetails').className = 'tabActive';
+		document.getElementById('tabGames').className = 'tabInactive';
+		document.getElementById('tabPgns').className = 'tabInactive';
+		showHideDetails('divGameDetails');
+	}
+	function showGames()
+	{
+		document.getElementById('moveTab').style.display='none';
+		document.getElementById('pgnList').style.display='none';
+		document.getElementById('gameList').style.display='block';
+		document.getElementById('tabGames').className = 'tabActive';
+		document.getElementById('tabDetails').className = 'tabInactive';
+		document.getElementById('tabPgns').className = 'tabInactive';
+	}
+	function showPgns()
+	{
+		document.getElementById('moveTab').style.display='none';
+		document.getElementById('gameList').style.display='none';
+		document.getElementById('pgnList').style.display='block';
+		document.getElementById('tabGames').className = 'tabInactive';
+		document.getElementById('tabDetails').className = 'tabInactive';
+		document.getElementById('tabPgns').className = 'tabActive';
+
+	}
+	function showHideDetails(whichDiv){
+		if(whichDiv=='divBoardOptions'){
+			document.getElementById('divBoardOptions').className = 'tabDetails tabDetailsActive';
+			document.getElementById('divGameDetails').className = 'tabDetails tabDetailsInactive';
+			document.getElementById('boardOptions').style.display='block';
+			document.getElementById('gameDetails').style.display='none';
+
+		}else{
+			document.getElementById('divBoardOptions').className = 'tabDetails tabDetailsInactive';
+			document.getElementById('divGameDetails').className = 'tabDetails tabDetailsActive';
+			document.getElementById('boardOptions').style.display='none';
+			document.getElementById('gameDetails').style.display='block';
+		}
+	}
+
+	function guessedWrongMove()
+	{
+		alert('sorry - that move was wrong');
+
+	}
+
+	function correctMove()
+	{
+
+
+	}
+
+
+
+	</script>
+</head>
+<body>
+<div id="mainContainer">
+	<div id="players"></div>
+	<div id="boardContainer">
+		<div id="board"></div>
+	</div>
+	<div id="rightColumn">
+		<div id="tabs">
+			<div id="tabDetails" onclick="showDetails()" class="tabInactive"><span>Details</span></div>
+			<div id="tabGames" onclick="showGames()" class="tabActive"><span>Games</span></div>
+			<div id="tabPgns" onclick="showPgns()" class="tabInactive"><span>PGN</span></div>
+
+		</div>
+		<div id="gameListContainer">
+			<div id="pgnList">
+				<div id="divListOfPgns">
+					<table id="listOfPgnFiles" cellspacing=0 cellpadding=2>
+						<thead>
+							<tr>
+								<td><b><b>Available pgn files:</b></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/Lasker.pgn');chessObj.displayGameListInTable('gameListTable');return false">Lasker.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/tactic1.pgn');chessObj.displayGameListInTable('gameListTable');return false">tactic1.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/fischer.pgn');chessObj.displayGameListInTable('gameListTable');return false">fischer.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/Nimzowitsch.pgn');chessObj.displayGameListInTable('gameListTable');return false">Nimzowitsch.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/greatgames.pgn');chessObj.displayGameListInTable('gameListTable');return false">greatgames.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/Morphy.pgn');chessObj.displayGameListInTable('gameListTable');return false">Morphy.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/Tal.pgn');chessObj.displayGameListInTable('gameListTable');return false">Some of Tal's greatest games</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/1001wcsc.pgn');chessObj.displayGameListInTable('gameListTable');return false">1001 Winning Chess Sacrifices and Combinations</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/tactics1-17.pgn');chessObj.displayGameListInTable('gameListTable');return false">tactics1-17.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/mating-patterns-1.pgn');chessObj.displayGameListInTable('gameListTable');return false">mating-patterns-1.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/otherplayers.pgn');chessObj.displayGameListInTable('gameListTable');return false">otherplayers.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/CURIO.PGN');chessObj.displayGameListInTable('gameListTable');return false">CURIO.PGN</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/KASBLITZ.PGN');chessObj.displayGameListInTable('gameListTable');return false">KASBLITZ.PGN</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/FANT100.PGN');chessObj.displayGameListInTable('gameListTable');return false">FANT100.PGN</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/1001-brilliant-checkmates.pgn');chessObj.displayGameListInTable('gameListTable');return false">1001-brilliant-checkmates.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/winning-chess-sacrifices-and-combinations.pgn');chessObj.displayGameListInTable('gameListTable');return false">winning-chess-sacrifices-and-combinations.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/topalov-kamsky.pgn');chessObj.displayGameListInTable('gameListTable');return false">topalov-kamsky.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/carlsen-kamsky.pgn');chessObj.displayGameListInTable('gameListTable');return false">carlsen-kamsky.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/topalov-kramnik-elista.pgn');chessObj.displayGameListInTable('gameListTable');return false">topalov-kramnik-elista.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/smallville.pgn');chessObj.displayGameListInTable('gameListTable');return false">smallville.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/perlepgn.pgn');chessObj.displayGameListInTable('gameListTable');return false">perlepgn.pgn</a></td>
+							</tr>
+							<tr>
+								<td><a href="#" onclick="chessObj.setPgn('pgn/kasparov-deepblue.pgn');chessObj.displayGameListInTable('gameListTable');return false">Kasparov vs Deep blue</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div id="gameList">
+				<TABLE id="gameListTable" cellspacing=0 cellpadding=2>
+				  		<thead>
+						<tr>
+							<td>View</td>
+							<td>White</td>
+							<td>Black</td>
+							<td>Res</td>
+						</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</TABLE>
+			</div>
+			<!-- This div displays move - it will be made visible by a callback sent to the constructor of the chessObj -->
+			<div id="moveTab">
+				<div id="divMoves">
+				</div>
+				<div id="buttons">
+					<input type="button" value="<<" onclick="chessObj.moveToStart()">
+					<input type="button" value="<" onclick="chessObj.move(-1)">
+					<input type="button" value=">" onclick="chessObj.move(1)">
+					<input type="button" value=">>" onclick="chessObj.moveToEnd(1)">
+					<input type="button" value="Play" onclick="chessObj.autoPlay()">
+					<input type="button" value="Stop" onclick="chessObj.stopAutoPlay()">
+				</div>
+				<div id="tabOptions">
+					<div id="divGameDetails" onclick="showHideDetails('divGameDetails')" class="tabDetails tabDetailsInactive">Game details</div>
+					<div id="divBoardOptions" onclick="showHideDetails('divBoardOptions')" class="tabDetails tabDetailsActive">Board options</div>
+				</div>
+				<div id="options">
+					<div id="boardOptions">
+						<a href="#" onclick="chessObj.flip();return false">Flip board</a>
+						<p><b>Chess set</b></p>
+							<a href="#" onclick="chessObj.setChessSet('merida');return false">Merida</a>|
+							<a href="#" onclick="chessObj.setChessSet('motif');return false">motif</a>|
+							<a href="#" onclick="chessObj.setChessSet('alpha');return false">alpha</a>|
+							<a href="#" onclick="chessObj.setChessSet('cases');return false">cases</a>|
+							<a href="#" onclick="chessObj.setChessSet('smart');return false">smart</a>|
+							<a href="#" onclick="chessObj.setChessSet('traveler');return false">traveler</a>|
+							<a href="#" onclick="chessObj.setChessSet('leipzig');return false">leipzig</a><br>
+						<p><b>Board size</b></p>
+						<a href="#" onclick="chessObj.setSquareSize(30);return false">Small</a> |
+						<a href="#" onclick="chessObj.setSquareSize(45);return false">Medium</a> |
+						<a href="#" onclick="chessObj.setSquareSize(60);return false">Large</a>
+					</div>
+					<div id="gameDetails" style="display:none;clear:both">
+						<table cellpadding="1" cellspacing="0">
+							<tr><td><b>White:</b></td><td><span id="details_white"></span>&nbsp;<span id="details_white_elo"></span></td></tr>
+							<tr><td><b>Black:</b></td><td><span id="details_black"></span>&nbsp;<span id="details_black_elo"></span></td></tr>
+							<tr><td><b>Result:</b></td><td id="details_result"></td></tr>
+							<tr><td><b>Event:</b></td><td id="details_event"></td></tr>
+							<tr><td><b>Date:</b></td><td id="details_date"></td></tr>
+							<tr><td><b>Round:</b></td><td id="details_round"></td></tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:15px">
+</div>
+<div id="debug"></div>
+<script type="text/javascript">
+var chessObj = new DHTMLGoodies.Chess(
+	{
+		sound:false,	/* No sound effects */
+		bgImageDarkSquares:'demo-images/piece-bg-60-wood2-dark.png',	/* Path to square background images */
+		bgImageLightSquares:'demo-images/piece-bg-60-wood2-light.png',
+		animationSpeed:0.3,	/* Speed of animation */
+		stopAutoplayBeforeComments:true,	/* Stop autoplay before comments */
+		callbackOnSwitchPgn:'showGames',	/* Name of function to call when user switches pgn file */
+		callbackOnGameLoaded:'showDetails',	/* Name of function to call when a game is loaded from the server */
+		parentRef:'board',	/* Reference to <div id="board">, i.e. where the chess board will be inserted by the script */
+		pgnFile:'pgn/Morphy.pgn',	/* Default pgn file to open */
+		chessSet:'alphapale',	/* Chess set */
+		squareSize:60,	/* Size in pixel of each square, possible values: 15,30,45,60,75 */
+		serverFile:'chess.php',
+		elMovesInline:'divMoves',
+		elActivePgnFile:'divActivePgnFile',	/* if element with id "divActivePgnFile" exists on the page, name of currently displayed pgn file will be shown there */
+		elPlayerNames:'players',
+		elActiveMove:'activeMove',	/* Where to display active move, i.e. <div id="activeMove">.  */
+		elGameAttributes:{ /* Which game attributes to show, example, the pgn attribute "round" will be inserted into <span id="details_round"> */
+			round:'details_round',
+			white:'details_white',
+			black:'details_black',
+			event:'details_event',
+			result:'details_result',
+			WhiteElo:'details_white_elo',
+			BlackElo:'details_black_elo',
+			date:'details_date'
+		}
+	}
+);
+/* Insert list of games into element <table id="gameListTable">. Display the columns "view", "white", "black" and "result". Everything except "view" are properties from the pgn file */
+chessObj.displayGameListInTable('gameListTable','view,white,black,result',{ viewGameLink:'View' });
+chessObj.showGame(14);	/* Load first game in pgn file at once, 0 = first index */
+createScrollTable('gameListTable','340','490');	/* Create scrollable html table for the game list */
+createScrollTable('listOfPgnFiles','340','490');	/* Create scrollable html table for the list of pgn files */
+</script>
+
+
+</body>
+</html>
+
