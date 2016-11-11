@@ -1,4 +1,4 @@
-# Capstone
+# Data Science Capstone
 
 # Recommendation system for chess players to advise chess opening. 
 
