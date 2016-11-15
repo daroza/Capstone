@@ -1,0 +1,5 @@
+games/*.json
+games/*.pgn
+games/combined.pgn
+*.pyc
+
