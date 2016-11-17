@@ -5,8 +5,13 @@ import numpy as np
 
 app = Flask(__name__)
 
-with open('../data/firstmodel_rfc.pkl') as f:
+#with open('../data/firstmodel_rfc.pkl') as f:
+with open('../data/model_log.pkl') as f:
     model = pickle.load(f)
+    print "loading model"
+
+with open('../data/model_log.pkl') as f:
+    model_name = pickle.load(f)
     print "loading model"
 
 # home page
@@ -55,23 +60,31 @@ def submit():
             <form action="/predict" method='POST' >
                 Your Name:<input type="text" name="player1" /><br>
                 Your Rating:<input type="text" name="player1_rating" /><br>
-                Are you playing white or black:<input type="text" name="user_input" default_value="black"/><br>
+                Are you playing white or black:<input type="text" name="user_color" default_value="black"/><br>
                 Your Opponents Name:<input type="text" name="player2" /><br>
                 Your Opponents Rating:<input type="text" name="player2_rating" /><br>
-                Round:<input type="text" name="round" /><br>
-                Other:<input type="text" name="other" /><br>
+                Round:<input type="text" name="game_round" /><br>
+                Other(can enter input vectors):<input type="text" name="other" /><br>
                 <input type="submit" />
             </form>
         </body>
         </html>
         '''
-
+# parse the input and determine which model to use.  Does the username exist in the dataset.  If not then use generalmodel.
 @app.route('/predict', methods=['POST'] )
 def predict():
-    text = str(request.form['other'])
+    player1 = str(request.form['player1'])
+    player1_rating = str(request.form['player1_rating'])
+    user_color = str(request.form['user_color'])
+    player2 = str(request.form['player2'])
+    player2_rating = str(request.form['player2_rating'])
+    game_round = str(request.form['round'])
+    text = str(request.form['other'])  # used as a vector
     #X = vectorizer.transform([text]) #unicode(text))
     #X = unicode(text, errors ='ignore')
-    X = "2455.0 2203.0 1.0" + " 0.0"*1986
+    #X = "2455.0 2203.0 1.0" + " 0.0"*1986
+    #X = "2.37000000e+03 -1.00000000e+00 2.16300000e+03 3.47400000e+03 2.67492710e-01"
+    X = text
     X = X.split(" ")
     X = map(float,X)
     X = np.array(X)
