@@ -10,10 +10,10 @@ with open('../data/model_log.pkl') as f:
     model = pickle.load(f)
     print "loading model"
 
-with open('../data/model_log.pkl') as f:
-    model_name = pickle.load(f)
-    print "loading model"
-
+# with open('../data/model_rfc.pkl') as f:
+#     model_rfc = pickle.load(f)
+#     print "loading rfc model"
+#
 # home page
 @app.route('/')
 def index():
