@@ -21,6 +21,10 @@ with open('../data/model_gbc.pkl') as f:
     model = pickle.load(f)
     print "loading model"
 
+with open('../data/ak_gb_eco.pkl') as f:
+    model_eco = pickle.load(f)
+    print "loading eco model"
+
 @app.route('/')
 def index():
     return '''
@@ -342,7 +346,7 @@ def predict():
 
 
         <div class="engine">
-        <h2>Practice Against Engine Below:</h2>
+        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1rnbqkbnrXppppppppX8X8X4P3X8XPPPP1PPPXRNBQKBNR_b_KQkq_e3_0_1">Practice Against Engine Below</a></h2>
         </div>
 
         <div id="board" style="width: 400px"></div>
