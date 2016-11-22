@@ -315,8 +315,9 @@ def predict():
 
         <body>
         <div class="jumbotron">
-        <h1>Predictions: {0} </h1>
-        <h3>Openings: {1} </h3>
+        <h1>Predictions:</h1>
+        <h3>First Move:{0} </h1>
+        <h3>Openings:{1} </h3>
         </div>
 
         <div class="page-header">
@@ -366,7 +367,7 @@ def predict():
 
         </body>
         </html>
-        '''.format(probs[0][1],probs[0][0],probs[0][1],probs[0][0],probs[1][1],probs[1][0],probs[2][1],probs[2][0])
+        '''.format(probs[0][1],probs_2[0][1],probs[0][1],probs[0][0],probs[1][1],probs[1][0],probs[2][1],probs[2][0])
 
 @app.route('/contact')
 def contact():
