@@ -245,6 +245,18 @@ def predict():
     # only show top 3 results
     probs= sorted(zip(p[0],model.classes_),reverse=True)[:3]
     #classes
+
+    p2 = model_eco.predict_proba([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
+         1.29850000e+04,   1.08010000e+04,   1.00000000e+00,
+         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+         0.00000000e+00,   1.00000000e+00,   0.00000000e+00,
+         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+         4.00000000e+00,   5.00000000e+00,   1.90000000e+01,
+         9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
+         1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
+    # only show top 3 results
+    probs_2= sorted(zip(p[0],model_eco.classes_),reverse=True)[:3]
+
     return '''
         <!DOCTYPE html>
         <html lang="en">
@@ -390,8 +402,8 @@ def contact():
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
                     <li><a href="http://0.0.0.0:8080/">Home</a></li>
-                    <li class="active"><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li class="active"><a href="/contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
@@ -412,10 +424,9 @@ def contact():
         <div class="jumbotron">
         <div class="container theme-showcase" role="main">
 
-        <body>
         <div class="jumbotron">
-        <h1>Predictions: {0} </h1>
-        <h3>Openings: {1} </h3>
+        <h1>Predictions: Nf3 </h1>
+        <h3>Openings: A10 English </h3>
         </div>
 
         <div class="page-header">
@@ -454,6 +465,11 @@ def contact():
             </tbody>
           </table>
         </div>
+
+        <div class="engine">
+        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1rnbqkbnrXppppppppX8X8X8X5N2XPPPPPPPPXRNBQKB1R_b_KQkq_-_1_1">Practice Against Engine Below</a></h2>
+        </div>
+
         </body>
         </div>
         </html>
