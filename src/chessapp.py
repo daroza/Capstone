@@ -21,7 +21,7 @@ with open('../data/model_gbc.pkl') as f:
     model = pickle.load(f)
     print "loading model"
 
-with open('../data/ak_gb_eco.pkl') as f:
+with open('../data/xgboost_big_eco_names.pkl') as f:
     model_eco = pickle.load(f)
     print "loading eco model"
 
