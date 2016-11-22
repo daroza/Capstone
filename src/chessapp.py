@@ -65,8 +65,8 @@ def index():
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">tree</a></li>
+                    <li><a href="#">Another contact</a></li>
                     <li><a href="#">Something else here</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header">Nav header</li>
@@ -163,7 +163,7 @@ def submit():
                   <ul class="nav navbar-nav">
                     <li class="active"><a href="http://0.0.0.0:8080/">Home</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
@@ -356,8 +356,8 @@ def predict():
         </html>
         '''.format(probs[0][1],probs[0][0],probs[0][1],probs[0][0],probs[1][1],probs[1][0],probs[2][1],probs[2][0])
 
-@app.route('/about')
-def about():
+@app.route('/contact')
+def contact():
     return '''
          <!DOCTYPE html>
          <html lang="en">
@@ -410,24 +410,56 @@ def about():
             </nav>
         <div class="container theme-showcase" role="main">
         <div class="jumbotron">
-            <h1>ChessPRO: Predict and Recommend Openings</h1>
-            <p>Enter inputs to the model in the text box!</p>
-            <form action="/predict" method='POST' >
-                Your Name:<input type="text" name="player1" /><br>
-                Your Rating:<input type="text" name="player1_rating" /><br>
-                Are you playing white or black:<input type="text" name="user_color" default_value="black"/><br>
-                Your Opponents Name:<input type="text" name="player2" /><br>
-                Your Opponents Rating:<input type="text" name="player2_rating" /><br>
-                Round:<input type="text" name="game_round" /><br>
-                Other(can enter input vectors):<input type="text" name="other" /><br>
-                <input type="submit"  class="btn btn-lg btn-primary" />
-            </form>
+        <div class="container theme-showcase" role="main">
+
+        <body>
+        <div class="jumbotron">
+        <h1>Predictions: {0} </h1>
+        <h3>Openings: {1} </h3>
+        </div>
+
+        <div class="page-header">
+        <h1>User Stats table</h1>
+        </div>
+
+        <div class="col-md-6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Opening</th>
+                <th>Probability of Playing</th>
+                <th>Winning Chances</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Nf3</td>
+                <td>73.21%</td>
+                <td>50%</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>g3</td>
+                <td>12.58%</td>
+                <td>50%</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>c4</td>
+                <td>3.34%</td>
+                <td>50%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         </body>
         </div>
         </html>
         '''
-@app.route('/contact')
-def contact():
+@app.route('/about')
+def about():
     return '''
          <!DOCTYPE html>
          <html lang="en">
