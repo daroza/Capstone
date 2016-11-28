@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask,render_template, request
 import pandas as pd
 import cPickle as pickle
 import numpy as np
@@ -59,13 +59,13 @@ def index():
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="http://ec2-54-187-246-213.us-west-2.compute.amazonaws.com:8080/">Home</a></li>
+                <li class="active"><a href="http://chesspro.tech/capstone/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">tree</a></li>
+                    <li><a href="/tree.html">tree</a></li>
                     <li><a href="#">Another contact</a></li>
                     <li><a href="#">Something else here</a></li>
                     <li role="separator" class="divider"></li>
@@ -81,11 +81,10 @@ def index():
 
         <div class="container theme-showcase" role="main">
         <div class="jumbotron">
-            <h1>ChessPRO: Predict and Recommend Openings</h1>
-            <p>Making you a better chess player thru Data Science! This app uses 1.8 million games
-            to predict your opponents first chess move and opening. Then it will recommends responses
-            that have the best probabilities of success</p>
-            <form action="/submit"   >
+            <h1>ChessPrO: Predict and recommend Openings</h1>
+            <p>Making you a better chess player thru Data Science! This app uses 1.9 million games
+            to predict White's first chess move and opening.
+	<form action="/submit" >
                 <input type="submit"  class="btn btn-lg btn-primary" value="Click Here To Start Predicting">
             </form>
         </div>
@@ -104,13 +103,19 @@ def index():
         </ol>
         <div class="carousel-inner" role="listbox">
           <div class="item active">
-            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="First slide">
+            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Intro slide">
           </div>
           <div class="item">
-            <img data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Second slide">
+            <img data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Capstone slide">
           </div>
           <div class="item">
-            <img data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Third slide">
+            <img data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Pipelinee slide">
+          </div>
+          <div class="item active">
+            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Methods slide">
+          </div>
+          <div class="item active">
+            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Result slide">
           </div>
         </div>
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -161,13 +166,13 @@ def submit():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://ec2-54-187-246-213.us-west-2.compute.amazonaws.com:8080/">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="contact">Contact</a></li>
+                    <li class="active"><a href="http://chesspro.tech/capstone/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="/tree">tree</a></li>
+                        <li><a href="/tree.html">tree</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
@@ -188,7 +193,7 @@ def submit():
             <form action="/predict" method='POST' >
                 Your Name:<input type="text" name="player1" /><br>
                 Your Rating:<input type="text" name="player1_rating" /><br>
-                Are you playing white or black:<input type="text" name="user_color" default_value="black"/><br>
+                <--Are you playing white or black:<input type="text" name="user_color" default_value="black"/><br> -->
                 Your Opponents Name:<input type="text" name="player2" /><br>
                 Your Opponents Rating:<input type="text" name="player2_rating" /><br>
                 Round:<input type="text" name="game_round" /><br>
@@ -202,13 +207,14 @@ def submit():
 # parse the input and determine which model to use.  Does the username exist in the dataset.  If not then use generalmodel.
 @app.route('/predict', methods=['POST'] )
 def predict():
-    # player1 = str(request.form['player1'])
-    # player1_rating = str(request.form['player1_rating'])
-    # user_color = str(request.form['user_color'])
-    # player2 = str(request.form['player2'])
-    # player2_rating = str(request.form['player2_rating'])
-    # game_round = str(request.form['round'])
+    player1 = str(request.form['player1'])
+    player1_rating = str(request.form['player1_rating'])
+    #user_color = str(request.form['user_color'])
+    player2 = str(request.form['player2'])
+    player2_rating = str(request.form['player2_rating'])
+    game_round = str(request.form['game_round'])
     text = str(request.form['other'])  # used as a vector
+    age = 1 
     #X = vectorizer.transform([text]) #unicode(text))
     #X = unicode(text, errors ='ignore')
     #X = "2455.0 2203.0 1.0" + " 0.0"*1986
@@ -291,13 +297,13 @@ def predict():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://ec2-54-187-246-213.us-west-2.compute.amazonaws.com:8080/">Home</a></li>
+                    <li class="active"><a href="http://chesspro.tech/capstone/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="/tree">tree</a></li>
+                        <li><a href="/tree.html">tree</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
@@ -402,13 +408,13 @@ def contact():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li><a href="http://ec2-54-187-246-213.us-west-2.compute.amazonaws.com:8080/">Home</a></li>
+                    <li><a href="http://chesspro.tech/capstone/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li class="active"><a href="/contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="/tree">Tree of Analysis</a></li>
+                        <li><a href="/tree.html">tree</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
@@ -508,13 +514,13 @@ def about():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li><a href="http://ec2-54-187-246-213.us-west-2.compute.amazonaws.com:8080/">Home</a></li>
+                    <li><a href="http://chesspro.tech/capstone/">Home</a></li>
                     <li class="active"><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="/tree">tree</a></li>
+                        <li><a href="/tree.html">tree</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
@@ -538,194 +544,41 @@ def about():
             <p>This is my capstone project for the 12-Week Data Science Immersive program I attended at
             Galvanize in Seattle beginning in September of 2016.</p>
 
-            <p>The primary goal of my project was to answer the ultimate question:
-            <i>Can data science make me a better chess player?!</i>  (this while students in my cohort
-            found impressive projects like classifying allergens based on chemical properties.)</p>
+            <p>The goal of my project is to predict white chess openings and first moves for white player.  As white has 
+            the first move advantage this tool can be used by players to prepare to play the black pieces by narrowing 
+	    what particular openings they should study.   
 
-            <p>I had previously learned chess from my father as a young boy but at that time
-            I was more interested in comic books, reading science fiction and playing with my
-            awesome Commodore 64!  I re-discovered chess while at University of Washington studying Electrical
-            Engineering where I played with other people on something called the World Wide Web which at the time
-            had recently become a thing but soon faded out as a fad similar to bi-partisanship.
-            Fueled by the intense desire to avoid my studies of Kirchhoff's Voltage Law and Fournier transforms,
-            I soon grew to love the game.  I began playing tournament chess and was able to achieve an expert
-            chess rating within a year winning several local tournaments.</p>
+            <p>I learned chess from my father as a young boy but at that time was more interested in comic books, science 
+            fiction and playing with my Commodore 64!  I re-discovered chess as a college student at University of Washington 
+            Fueled by the desire to avoid studying Kirchhoff's Voltage Law, Fourier transforms, and other Electrical Engineering            subjects I soon grew to love the game.  I began playing tournament chess and achieved an expert chess rating.</p>
 
-            Details about the project:
+            <p>Dataset: I gathered archives of pgn files from KingBase2016-03. PGN is in an ascii format easibly readible 
+	    parsable and importable into pandas.</p>
 
-            Dataset: KingBase2016-03 pgn data files. ascii format easibly readible parsable and importable into pandas.
-
-            Models:
-            GradientBoostingClassifier
-            NaiveBayes
-
-
-
-            <p>Why this case under certain conditions NaiveBayes is a better predictor.
-            Creating an ensemble method.
-            Chess minimax theorem and my idea of building a probabilistic chess engine based on human results
-            instead of heuristic evaluation functions to perform the calculations.
-            How someone should approach chess?</p>
+            <p>Models:
+            For my modeling I utilized XGBoost which is a form of Gradient Boosting Machine popular in Kaggle competitions. 
+            XGboost is an open-source, effective, efficient model and was developed by graduate students at my former alma 
+            matter.  XGBoost's abilitiy to parallelize building each decision tree helped during the training and tuning due to             my large dataset, high number of classes and high dimensionality of features. </p> 
 
             <p>Well I am not sure about whether data science will one day make me a Grand Master, but I
             can say my capstone has helped as a platform to exercise many of the concepts and tools that the
             Galvanize Instructors who are all tremendous scientists, teachers and people by the way
             taught me.</p>
 
-            <p>Technologies used in this project (put images here):
-            Python Flask AWS Github DynamoDB Sklearn TensorFlow</p>
 
-            <p>Pitfalls of chess and data science:
-            The chess master Edgar Mednis once said:
-            "Chess will be won by the person who makes the next to last mistake"</p>
 
         </body>
         </div>
         </html>
         '''
 
-@app.route('/tree')
+@app.route('/tree.html', methods=['GET'])
 def tree():
-    return '''
-        <!DOCTYPE html>
-        <meta charset="utf-8">
-        <style>
-        .node {
-          cursor: pointer;
-        }
-        .node circle {
-          fill: #fff;
-          stroke: steelblue;
-          stroke-width: 1.5px;
-        }
-        .node text {
-          font: 10px sans-serif;
-        }
-        .link {
-          fill: none;
-          stroke: #ccc;
-          stroke-width: 1.5px;
-        }
-        </style>
-        <body>
-        <script src="//d3js.org/d3.v3.min.js"></script>
-        <script>
-        var margin = {top: 20, right: 120, bottom: 20, left: 120},
-            width = 960 - margin.right - margin.left,
-            height = 800 - margin.top - margin.bottom;
-        var i = 0,
-            duration = 750,
-            root;
-        var tree = d3.layout.tree()
-            .size([height, width]);
-        var diagonal = d3.svg.diagonal()
-            .projection(function(d) { return [d.y, d.x]; });
-        var svg = d3.select("body").append("svg")
-            .attr("width", width + margin.right + margin.left)
-            .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        d3.json("flare.json", function(error, flare) {
-          if (error) throw error;
-          root = flare;
-          root.x0 = height / 2;
-          root.y0 = 0;
-          function collapse(d) {
-            if (d.children) {
-              d._children = d.children;
-              d._children.forEach(collapse);
-              d.children = null;
-            }
-          }
-          root.children.forEach(collapse);
-          update(root);
-        });
-        d3.select(self.frameElement).style("height", "800px");
-        function update(source) {
-          // Compute the new tree layout.
-          var nodes = tree.nodes(root).reverse(),
-              links = tree.links(nodes);
-          // Normalize for fixed-depth.
-          nodes.forEach(function(d) { d.y = d.depth * 180; });
-          // Update the nodes…
-          var node = svg.selectAll("g.node")
-              .data(nodes, function(d) { return d.id || (d.id = ++i); });
-          // Enter any new nodes at the parent's previous position.
-          var nodeEnter = node.enter().append("g")
-              .attr("class", "node")
-              .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-              .on("click", click);
-          nodeEnter.append("circle")
-              .attr("r", 1e-6)
-              .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-          nodeEnter.append("text")
-              .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-              .attr("dy", ".35em")
-              .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-              .text(function(d) { return d.name; })
-              .style("fill-opacity", 1e-6);
-          // Transition nodes to their new position.
-          var nodeUpdate = node.transition()
-              .duration(duration)
-              .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-          nodeUpdate.select("circle")
-              .attr("r", 4.5)
-              .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-          nodeUpdate.select("text")
-              .style("fill-opacity", 1);
-          // Transition exiting nodes to the parent's new position.
-          var nodeExit = node.exit().transition()
-              .duration(duration)
-              .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-              .remove();
-          nodeExit.select("circle")
-              .attr("r", 1e-6);
-          nodeExit.select("text")
-              .style("fill-opacity", 1e-6);
-          // Update the links…
-          var link = svg.selectAll("path.link")
-              .data(links, function(d) { return d.target.id; });
-          // Enter any new links at the parent's previous position.
-          link.enter().insert("path", "g")
-              .attr("class", "link")
-              .attr("d", function(d) {
-                var o = {x: source.x0, y: source.y0};
-                return diagonal({source: o, target: o});
-              });
-          // Transition links to their new position.
-          link.transition()
-              .duration(duration)
-              .attr("d", diagonal);
-          // Transition exiting nodes to the parent's new position.
-          link.exit().transition()
-              .duration(duration)
-              .attr("d", function(d) {
-                var o = {x: source.x, y: source.y};
-                return diagonal({source: o, target: o});
-              })
-              .remove();
-          // Stash the old positions for transition.
-          nodes.forEach(function(d) {
-            d.x0 = d.x;
-            d.y0 = d.y;
-          });
-        }
-        // Toggle children on click.
-        function click(d) {
-          if (d.children) {
-            d._children = d.children;
-            d.children = null;
-          } else {
-            d.children = d._children;
-            d._children = null;
-          }
-          update(d);
-        }
-        </script>
-                </body>
-                </div>
-                </html>
-        '''
+    return render_template('tree.html') 
+
+#app.route('static/<string:page_name>')
+#def static(page_name):
+#    return send_static_file(page_name)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True, threaded=True)
