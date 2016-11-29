@@ -215,7 +215,6 @@ def submit():
 # parse the input and determine which model to use.  Does the username exist in the dataset.  If not then use generalmodel.
 @app.route('/predict', methods=['POST'] )
 def predict():
-
 	
     player1 = str(request.form['player1'])
     #calculate the player1 rating here
@@ -226,14 +225,27 @@ def predict():
     player2_rating = str(request.form['player2_rating'])
     #game_round = str(request.form['game_round'])
     text = str(request.form['other'])  # used as a vector
-    age = 1 
-    p_wfm_given_white = 1
+    age = str(100) 
+    p_wfm_given_white = str(1)
+    p_opening_given_white = str(1)
+    white_level_Expert = str(0)
+    white_level_GM = str(0)
+    white_level_IM = str(0)
+    white_level_Master = str(0)
+    white_level_Super = str(1)
+    black_level_Expert = str(0)
+    black_level_GM = str(0)
+    black_level_IM = str(0)
+    black_level_Master = str(0)
+    black_level_Super = str(0)
+    white_enc = player1
+    black_enc = player2
     def get_rating_w(player):
 	if player=='754':
 	    return str(2882)
 	elif player=='263':
             return str(2779)
-	elif player=='2779':
+	elif player=='2784':
             return str(2555)
 	elif player=='28533':
             return str(2772)
@@ -244,21 +256,24 @@ def predict():
         if player=='40024':
 	    return str(2772)
         elif player=='323':
-            return str(279)
-        elif player=='729':
+            return str(2779)
+        elif player=='739':
             return str(2882)
         elif player=='0':
             return str(2555)
         else:
             return player2_rating
 
-    player1_rating = get_rating_w(player1)
-    player2_rating = get_rating_b(player2)
+    whiteelo = get_rating_w(player1)
+    blackelo = get_rating_b(player2)
+
+    diff = str(int(whiteelo) - int(blackelo))
     #X = vectorizer.transform([text]) #unicode(text))
     #X = unicode(text, errors ='ignore')
     #X = "2455.0 2203.0 1.0" + " 0.0"*1986
     #X = "2.37000000e+03 -1.00000000e+00 2.16300000e+03 3.47400000e+03 2.67492710e-01"
     #
+    #if text != "":
     X = text.strip()
     X = X.split(",")
     X = map(float,X)
@@ -289,6 +304,47 @@ def predict():
     #     9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
     #     1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
     # only show top 3 results
+
+    #join the Xs
+    X_fm = list(",".join(
+    (blackelo,
+    whiteelo,
+    age,
+    diff,
+    white_enc,
+    white_level_Expert,
+    white_level_GM,
+    white_level_IM,
+    white_level_Master,
+    white_level_Super,
+    black_level_Expert,
+    black_level_GM,
+    black_level_IM,
+    black_level_Master,
+    black_level_Super,
+    black_enc,
+    p_wfm_given_white
+    )))
+    X_eco = list(",".join(
+    (blackelo,
+    whiteelo,
+    age,
+    diff,
+    white_enc,
+    white_level_Expert,
+    white_level_GM,
+    white_level_IM,
+    white_level_Master,
+    white_level_Super,
+    black_level_Expert,
+    black_level_GM,
+    black_level_IM,
+    black_level_Master,
+    black_level_Super,
+    black_enc,
+    p_opening_given_white,
+    p_wfm_given_white
+    )))
     p = model.predict_proba(X)
     probs= sorted(zip(p[0],model.classes_),reverse=True)[:3]
     #classes
@@ -305,6 +361,21 @@ def predict():
     # 
     p2 = model_eco.predict_proba(X)
     probs_2= sorted(zip(p[0],model_eco.classes_),reverse=True)[:3]
+
+    #caclulate probabillities of wining for black
+    # whites first move advantage is less at beginner level but since this dataset is mainly more experienced players 
+#will simplify and adjust all white as 32. 
+    import math
+    def estimate_black_success(whiteelo,blackelo,adj=32):
+        """input is two ratings ratingA (white), ratingB (black)
+        and an optional adjustment factor (adj) which will be added
+        to ratingA (white). Usually white has a small advantage which
+        has been observed to be about +32 to +50"""
+        white_adj = int(whiteelo)+adj
+        diff = white_adj-int(blackelo)
+        ex = diff/400.
+    	return round((1/(1+math.pow(10,ex)) *100),2)
+    prob_black = estimate_black_success(whiteelo,blackelo,32)
 
     return '''
         <!DOCTYPE html>
@@ -388,19 +459,19 @@ def predict():
                 <td>1</td>
                 <td>{2}</td>
                 <td>{3}</td>
-                <td>50%</td>
+                <td>{8}</td>
               </tr>
               <tr>
                 <td>2</td>
                 <td>{4}</td>
                 <td>{5}</td>
-                <td>35%</td>
+                <td>{8}</td>
               </tr>
               <tr>
                 <td>3</td>
                 <td>{6}</td>
                 <td>{7}</td>
-                <td>50%</td>
+                <td>{8}</td>
               </tr>
             </tbody>
           </table>
@@ -414,7 +485,7 @@ def predict():
 
         </body>
         </html>
-        '''.format(probs[0][1],probs_2[0][1],probs[0][1],probs[0][0],probs[1][1],probs[1][0],probs[2][1],probs[2][0])
+        '''.format(probs[0][1],probs_2[0][1],probs[0][1],probs[0][0],probs[1][1],probs[1][0],probs[2][1],probs[2][0],prob_black)
 
 @app.route('/contact')
 def contact():
