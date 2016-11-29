@@ -35,7 +35,7 @@ def index():
          <meta http-equiv="X-UA-Compatible" content="IE=edge">
          <meta name="viewport" content="width=device-width, initial-scale=1">
          <meta name="author" content="Galvanize DSI">
-         <title>ChessPRO: Predict and Recommend Openings</title>
+         <title>ChessPrO: Predict and recommend Openings</title>
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
          <!-- Optional Blog -->
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -82,7 +82,7 @@ def index():
         <div class="container theme-showcase" role="main">
         <div class="jumbotron">
             <h1>ChessPrO: Predict and recommend Openings</h1>
-            <p>Making you a better chess player thru Data Science! This app uses 1.9 million games
+            <p>Making you a better chess player through Data Science! This app uses 1.9 million games
             to predict White's first chess move and opening.
 	<form action="/submit" >
                 <input type="submit"  class="btn btn-lg btn-primary" value="Click Here To Start Predicting">
@@ -140,7 +140,7 @@ def submit():
          <html lang="en">
          <head>
          <meta charset="utf-8">
-         <title>ChessPRO: Predict and Recommend Openings</title>
+         <title>ChessPrO: Predict and recommend Openings</title>
          <meta name="description" content="ChessPRO: Predict and Recommend Openings">
          <meta name="author" content="Galvanize DSI">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -191,12 +191,10 @@ def submit():
             <h1>ChessPRO: Predict and Recommend Openings</h1>
             <p>Enter inputs to the model in the text box!</p>
             <form action="/predict" method='POST' >
-                Your Name:<input type="text" name="player1" /><br>
-                Your Rating:<input type="text" name="player1_rating" /><br>
-                <--Are you playing white or black:<input type="text" name="user_color" default_value="black"/><br> -->
-                Your Opponents Name:<input type="text" name="player2" /><br>
-                Your Opponents Rating:<input type="text" name="player2_rating" /><br>
-                Round:<input type="text" name="game_round" /><br>
+                Player 1 (white pieces):<input type="text" name="player1" /><br>
+                Player 1 Rating:<input type="text" name="player1_rating" /><br>
+                Player 2 (black pieces):<input type="text" name="player2" /><br>
+                Player 2 Rating:<input type="text" name="player2_rating" /><br>
                 Other(can enter input vectors):<input type="text" name="other" /><br>
                 <input type="submit"  class="btn btn-lg btn-primary" />
             </form>
@@ -212,16 +210,17 @@ def predict():
     #user_color = str(request.form['user_color'])
     player2 = str(request.form['player2'])
     player2_rating = str(request.form['player2_rating'])
-    game_round = str(request.form['game_round'])
+    #game_round = str(request.form['game_round'])
     text = str(request.form['other'])  # used as a vector
     age = 1 
     #X = vectorizer.transform([text]) #unicode(text))
     #X = unicode(text, errors ='ignore')
     #X = "2455.0 2203.0 1.0" + " 0.0"*1986
     #X = "2.37000000e+03 -1.00000000e+00 2.16300000e+03 3.47400000e+03 2.67492710e-01"
-    # X = text
-    # X = X.split(" ")
-    # X = map(float,X)
+    #
+    X = text.strip()
+    X = X.split(",")
+    X = map(float,X)
     # X = np.array([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
     #      1.29850000e+04,   1.08010000e+04,   1.00000000e+00,
     #      0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
@@ -240,27 +239,30 @@ def predict():
     #      4.00000000e+00,   5.00000000e+00,   1.90000000e+01,
     #      9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
     #      1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
-    p = model.predict_proba([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
-         1.29850000e+04,   1.08010000e+04,   1.00000000e+00,
-         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
-         0.00000000e+00,   1.00000000e+00,   0.00000000e+00,
-         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
-         4.00000000e+00,   5.00000000e+00,   1.90000000e+01,
-         9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
-         1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
+    #p = model.predict_proba([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
+    #     1.29850000e+04,   1.08010000e+04,   1.00000000e+00,
+    #     0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+    #     0.00000000e+00,   1.00000000e+00,   0.00000000e+00,
+    #     0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+    #     4.00000000e+00,   5.00000000e+00,   1.90000000e+01,
+    #     9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
+    #     1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
     # only show top 3 results
+    p = model.predict_proba(X)
     probs= sorted(zip(p[0],model.classes_),reverse=True)[:3]
     #classes
 
-    p2 = model_eco.predict_proba([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
-         1.29850000e+04,   1.08010000e+04,   1.00000000e+00,
-         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
-         0.00000000e+00,   1.00000000e+00,   0.00000000e+00,
-         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
-         4.00000000e+00,   5.00000000e+00,   1.90000000e+01,
-         9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
-         1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
+    #p2 = model_eco.predict_proba([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
+    #     1.29850000e+04,   1.08010000e+04,   1.00000000e+00,
+    #     0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+    #     0.00000000e+00,   1.00000000e+00,   0.00000000e+00,
+    #     0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+    #     4.00000000e+00,   5.00000000e+00,   1.90000000e+01,
+    #     9.20000000e+01,   4.34782609e-02,   2.65957447e-02,
+    #     1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
     # only show top 3 results
+    # 
+    p2 = model_eco.predict_proba(X)
     probs_2= sorted(zip(p[0],model_eco.classes_),reverse=True)[:3]
 
     return '''
@@ -362,8 +364,6 @@ def predict():
             </tbody>
           </table>
         </div>
-
-
         <div class="engine">
         <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1rnbqkbnrXppppppppX8X8X4P3X8XPPPP1PPPXRNBQKBNR_b_KQkq_e3_0_1">Practice Against Engine Below</a></h2>
         </div>

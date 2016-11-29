@@ -21,11 +21,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random
 
 #use kfold cv to get best params
 cv_params = {'max_depth': [3,5,7], 'min_child_weight': [1,3,5]}
-ind_params = {'learning_rate': 0.1, 'n_estimators': 100, 'seed':0, 'subsample': 0.8, 'colsample_bytree': 0.8, 
+ind_params = {'learning_rate': 1, 'n_estimators': 10, 'seed':0, 'subsample': 0.8, 'colsample_bytree': 0.8, 
              'objective': 'multi:softprob'}
 optimized_GBM = GridSearchCV(xgb.XGBClassifier(**ind_params), 
                             cv_params, 
-                             scoring = 'roc_auc', cv = 5, n_jobs = -1) 
+                             scoring = 'neg_log_loss', cv = 5, n_jobs = -1) 
 
                              #scoring = 'accuracy', cv = 5, n_jobs = -1) 
 optimized_GBM.fit(X_train, y_train)
@@ -33,7 +33,7 @@ optimized_GBM.fit(X_train, y_train)
 
 import cPickle as pickle
 #favorite_color = { "lion": "yellow", "kitty": "red" }
-pickle.dump(optimized_GBM, open( "finalXGB.pkl", "wb" ) )
+pickle.dump(optimized_GBM, open( "finalXGB_test.pkl", "wb" ) )
 
 print optimized_GBM.grid_scores_
 print optimized_GMB.feature_importances_
