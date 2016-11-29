@@ -191,9 +191,19 @@ def submit():
             <h1>ChessPRO: Predict and Recommend Openings</h1>
             <p>Enter inputs to the model in the text box!</p>
             <form action="/predict" method='POST' >
-                Player 1 (white pieces):<input type="text" name="player1" /><br>
+                Player 1 (white pieces):<select name="player1">
+                <option value="754">Carlsen, Magnus</option>
+                <option value="263">Nakamura, Hikaru</option>
+                <option value="2784" selected>Kosteniuk, Alexandra</option>
+                <option value="28533">Karjakin, Sergei</option>
+            </select><br>
                 Player 1 Rating:<input type="text" name="player1_rating" /><br>
-                Player 2 (black pieces):<input type="text" name="player2" /><br>
+                Player 2 (black pieces):<select name="player2">
+                <option value="40024">Karjakin, Sergei</option>
+                <option value="323">Nakamura, Hikaru</option>
+                <option value="739">Carlsen, Magnus</option>
+                <option value="0" selected>Kosteniuk, Alexandra</option>
+            </select><br>
                 Player 2 Rating:<input type="text" name="player2_rating" /><br>
                 Other(can enter input vectors):<input type="text" name="other" /><br>
                 <input type="submit"  class="btn btn-lg btn-primary" />
@@ -205,14 +215,45 @@ def submit():
 # parse the input and determine which model to use.  Does the username exist in the dataset.  If not then use generalmodel.
 @app.route('/predict', methods=['POST'] )
 def predict():
+
+	
     player1 = str(request.form['player1'])
+    #calculate the player1 rating here
     player1_rating = str(request.form['player1_rating'])
     #user_color = str(request.form['user_color'])
     player2 = str(request.form['player2'])
+    #calculate the player2 rating here to 
     player2_rating = str(request.form['player2_rating'])
     #game_round = str(request.form['game_round'])
     text = str(request.form['other'])  # used as a vector
     age = 1 
+    p_wfm_given_white = 1
+    def get_rating_w(player):
+	if player=='754':
+	    return str(2882)
+	elif player=='263':
+            return str(2779)
+	elif player=='2779':
+            return str(2555)
+	elif player=='28533':
+            return str(2772)
+	else:
+	    return player1_rating
+
+    def get_rating_b(player):
+        if player=='40024':
+	    return str(2772)
+        elif player=='323':
+            return str(279)
+        elif player=='729':
+            return str(2882)
+        elif player=='0':
+            return str(2555)
+        else:
+            return player2_rating
+
+    player1_rating = get_rating_w(player1)
+    player2_rating = get_rating_b(player2)
     #X = vectorizer.transform([text]) #unicode(text))
     #X = unicode(text, errors ='ignore')
     #X = "2455.0 2203.0 1.0" + " 0.0"*1986
