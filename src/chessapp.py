@@ -2,19 +2,32 @@ from flask import Flask,render_template, request
 import pandas as pd
 import cPickle as pickle
 import numpy as np
-
+from sklearn import preprocessing
+le = preprocessing.LabelEncoder()
 app = Flask(__name__)
+
 
 #with open('../data/firstmodel_rfc.pkl') as f:
 # with open('../data/model_log.pkl') as f:
 #     model = pickle.load(f)
 #     print "loading model"
 
-# with open('../data/model_rfc.pkl') as f:
-#     model_rfc = pickle.load(f)
-#     print "loading rfc model"
+#with open('../data/df_final_master3.pkl') as f:
+#     df = pickle.load(f)
+#     print "loading df"
 #
 # home page
+#XGB FM xgboost_fm_names_final_1000.pkl
+#with open('../data/xgboost_fm_names_final_1000.pkl') as f:
+with open('../data/xgboost_fm.pkl') as f:
+    model_x_fm = pickle.load(f)
+    print "loading xgboost model"
+
+#XGB FM xgboost_eco_names_final_tst.pkl
+#with open('../data/xgboost_eco_names_final_tst.pkl') as f:
+with open('../data/xgboost_sg_names_final.pkl') as f:
+    model_x_eco = pickle.load(f)
+    print "loading xgboost model"
 
 #GBC
 with open('../data/model_gbc.pkl') as f:
@@ -139,6 +152,25 @@ def submit():
          <!DOCTYPE html>
          <html lang="en">
          <head>
+	 <style type="text/css">
+         img {
+         width:100px;
+         margin:auto;
+         }   
+         </style> 
+	 <script type="text/javascript"> 
+	 $(document).ready(function(){
+	 var pictureList = [
+    	 "/static/kosteniuk.jpeg",
+    	 "/static/carlsen.jpeg",
+    	 "/static/nakamura.jpeg",
+    	 "/static/karjakin.jpeg",];
+
+	 $('#picDD').change(function(){
+    	     var val = parseInt($('#picDD').val());
+	     $('img').attr("src",pictureList[val]);});
+         });
+	 </script>
          <meta charset="utf-8">
          <title>ChessPrO: Predict and recommend Openings</title>
          <meta name="description" content="ChessPRO: Predict and Recommend Openings">
@@ -188,27 +220,39 @@ def submit():
 
         <div class="container theme-showcase" role="main">
         <div class="jumbotron">
-            <h1>ChessPRO: Predict and Recommend Openings</h1>
-            <p>Enter inputs to the model in the text box!</p>
-            <form action="/predict" method='POST' >
-                Player 1 (white pieces):<select name="player1">
+            <h1>ChessPrO: Predict and recommend Openings</h1>
+            <p>Select players names from the drop down below!</p>
+        <form action="/predict" method='POST'>
+	<table style="width:100%">
+	<tr> 
+	<th BGCOLOR="#FFFFFF"><b>White:</b><select name="player1" style="width: 180px">
                 <option value="754">Carlsen, Magnus</option>
                 <option value="263">Nakamura, Hikaru</option>
                 <option value="2784" selected>Kosteniuk, Alexandra</option>
                 <option value="28533">Karjakin, Sergei</option>
-            </select><br>
-                Player 1 Rating:<input type="text" name="player1_rating" /><br>
-                Player 2 (black pieces):<select name="player2">
-                <option value="40024">Karjakin, Sergei</option>
+        </select></td></th>
+	<th BGCOLOR="#000000"><font color="white">Black:</font><select name="player2" style="width: 180px">
+	<option value="40024">Karjakin, Sergei</option>
                 <option value="323">Nakamura, Hikaru</option>
-                <option value="739">Carlsen, Magnus</option>
-                <option value="0" selected>Kosteniuk, Alexandra</option>
-            </select><br>
-                Player 2 Rating:<input type="text" name="player2_rating" /><br>
-                Other(can enter input vectors):<input type="text" name="other" /><br>
-                <input type="submit"  class="btn btn-lg btn-primary" />
-            </form>
-        </body>
+                <option value="739" selected>Carlsen, Magnus</option>
+                <option value="0" >Kosteniuk, Alexandra</option>
+        </select></th>
+	
+
+        </tr>
+	<tr>
+	<td align="center"><img src = "/static/kosteniuk.jpeg" name="image-swap"></td>
+    	<td align="center"><img src = "/static/carlsen2.jpeg" align="center"></td>
+	</tr>
+	<tr>	
+	<td>Player 1 Rating:<input type="text" name="player1_rating" /><br></td>
+	<td>Player 2 Rating:<input type="text" name="player2_rating" /><br></td>
+	</tr>	
+	</table>
+	<input type="submit"  class="btn btn-lg btn-primary" />
+	Other(can enter input vectors):<input type="text" name="other" /><br>
+	</form> 
+	</body>
         </div>
         </html>
         '''
@@ -216,28 +260,30 @@ def submit():
 @app.route('/predict', methods=['POST'] )
 def predict():
 	
-    player1 = str(request.form['player1'])
+    player1 = int(request.form['player1'])
     #calculate the player1 rating here
-    player1_rating = str(request.form['player1_rating'])
+    player1_rating = 2600 #default
+    #player1_rating = str(request.form['player1_rating'])
     #user_color = str(request.form['user_color'])
-    player2 = str(request.form['player2'])
+    player2 = int(request.form['player2'])
     #calculate the player2 rating here to 
-    player2_rating = str(request.form['player2_rating'])
+    player2_rating = 2600 # default
+    #player2_rating = str(request.form['player2_rating'])
     #game_round = str(request.form['game_round'])
     text = str(request.form['other'])  # used as a vector
-    age = str(100) 
-    p_wfm_given_white = str(1)
-    p_opening_given_white = str(1)
-    white_level_Expert = str(0)
-    white_level_GM = str(0)
-    white_level_IM = str(0)
-    white_level_Master = str(0)
-    white_level_Super = str(1)
-    black_level_Expert = str(0)
-    black_level_GM = str(0)
-    black_level_IM = str(0)
-    black_level_Master = str(0)
-    black_level_Super = str(0)
+    age = 100
+    p_wfm_given_white = 0.9
+    p_opening_given_white = 0.9
+    white_level_Expert = 0
+    white_level_GM = 0
+    white_level_IM = 0
+    white_level_Master = 0
+    white_level_Super = 1
+    black_level_Expert = 0
+    black_level_GM = 0
+    black_level_IM = 0
+    black_level_Master = 0
+    black_level_Super = 0
     white_enc = player1
     black_enc = player2
     def get_rating_w(player):
@@ -267,14 +313,15 @@ def predict():
     whiteelo = get_rating_w(player1)
     blackelo = get_rating_b(player2)
 
-    diff = str(int(whiteelo) - int(blackelo))
+    diff = (int(whiteelo) - int(blackelo))
     #X = vectorizer.transform([text]) #unicode(text))
     #X = unicode(text, errors ='ignore')
     #X = "2455.0 2203.0 1.0" + " 0.0"*1986
     #X = "2.37000000e+03 -1.00000000e+00 2.16300000e+03 3.47400000e+03 2.67492710e-01"
     #
     #if text != "":
-    X = text.strip()
+    X = "2.37000000e+03, 2.16300000e+03,   3.47400000e+03,          1.29850000e+04,   1.08010000e+04,   1.00000000e+00,          0.00000000e+00,   0.00000000e+00,   0.00000000e+00,          0.00000000e+00,   1.00000000e+00,   0.00000000e+00,          0.00000000e+00,   0.00000000e+00,   0.00000000e+00,          4.00000000e+00,   5.00000000e+00,   1.90000000e+01,          9.20000000e+01,   4.34782609e-02,   2.65957447e-02,          1.00000000e+00,   1.01063830e-01,   2.67492710e-01".strip()
+    #X = text.strip()
     X = X.split(",")
     X = map(float,X)
     # X = np.array([2.37000000e+03,   2.16300000e+03,   3.47400000e+03,
@@ -306,8 +353,8 @@ def predict():
     # only show top 3 results
 
     #join the Xs
-    X_fm = list(",".join(
-    (blackelo,
+    X_fm = ([
+    blackelo,
     whiteelo,
     age,
     diff,
@@ -324,9 +371,9 @@ def predict():
     black_level_Super,
     black_enc,
     p_wfm_given_white
-    )))
-    X_eco = list(",".join(
-    (blackelo,
+    ])
+    
+    X_eco = ([blackelo,
     whiteelo,
     age,
     diff,
@@ -344,8 +391,16 @@ def predict():
     black_enc,
     p_opening_given_white,
     p_wfm_given_white
-    )))
-    p = model.predict_proba(X)
+    ])
+
+    #X_fm = map(float,X_fm)
+    #testp =  model_x_fm.predict_proba([2882,2772,100,100,754,0,0,0,0,1,0,0,0,0,1,40024,.9])
+    #testp =  model_x_fm.predict_proba([X_fm])
+    #testp2 =  model_x_eco.predict_proba([X_eco])
+    #print testp2
+    
+    #p = model.predict_proba(X)
+    p =  model_x_fm.predict_proba([X_fm])
     probs= sorted(zip(p[0],model.classes_),reverse=True)[:3]
     #classes
 
@@ -359,10 +414,12 @@ def predict():
     #     1.00000000e+00,   1.01063830e-01,   2.67492710e-01])
     # only show top 3 results
     # 
-    p2 = model_eco.predict_proba(X)
-    probs_2= sorted(zip(p[0],model_eco.classes_),reverse=True)[:3]
+    #p2 = model_eco.predict_proba(X)
+    #probs_2= sorted(zip(p[0],model_eco.classes_),reverse=True)[:3]
 
+    p2 =  model_x_eco.predict_proba([X_eco])
     #caclulate probabillities of wining for black
+    probs_2= sorted(zip(p2[0],model_x_eco.classes_),reverse=True)[:3]
     # whites first move advantage is less at beginner level but since this dataset is mainly more experienced players 
 #will simplify and adjust all white as 32. 
     import math
@@ -372,9 +429,9 @@ def predict():
         to ratingA (white). Usually white has a small advantage which
         has been observed to be about +32 to +50"""
         white_adj = int(whiteelo)+adj
-        diff = white_adj-int(blackelo)
+        diff = int(blackelo)-white_adj
         ex = diff/400.
-    	return round((1/(1+math.pow(10,ex)) *100),2)
+    	return str(round((1/(1+math.pow(10,ex)) *100),2))+"%"
     prob_black = estimate_black_success(whiteelo,blackelo,32)
 
     return '''
@@ -437,7 +494,7 @@ def predict():
         <div class="jumbotron">
         <h1>Predictions:</h1>
         <h3>First Move:{0} </h1>
-        <h3>Openings:{1} </h3>
+        <h3>Openings:<a href='http://chessopenings.com/eco/{1}'>{1}</a></h3>
         </div>
 
         <div class="page-header">
@@ -485,7 +542,7 @@ def predict():
 
         </body>
         </html>
-        '''.format(probs[0][1],probs_2[0][1],probs[0][1],probs[0][0],probs[1][1],probs[1][0],probs[2][1],probs[2][0],prob_black)
+        '''.format(probs[0][1],probs_2[0][1][0:3],probs[0][1],str(round(probs[0][0]*100,2))+'%',probs[1][1],str(round(probs[1][0]*100,2))+'%',probs[2][1],str(round(probs[2][0]*100,2))+'%',prob_black)
 
 @app.route('/contact')
 def contact():
