@@ -25,6 +25,7 @@ with open('../data/xgboost_fm.pkl') as f:
 
 #XGB FM xgboost_eco_names_final_tst.pkl
 #with open('../data/xgboost_eco_names_final_tst.pkl') as f:
+#with open('../data/xgboost_sg_names_final3.pkl') as f:
 with open('../data/xgboost_sg_names_final.pkl') as f:
     model_x_eco = pickle.load(f)
     print "loading xgboost model"
@@ -154,7 +155,7 @@ def submit():
          <head>
 	 <style type="text/css">
          img {
-         width:100px;
+         width:200px;
          margin:auto;
          }   
          </style> 
@@ -223,34 +224,29 @@ def submit():
             <h1>ChessPrO: Predict and recommend Openings</h1>
             <p>Select players names from the drop down below!</p>
         <form action="/predict" method='POST'>
-	<table style="width:100%">
+	<table style="width:70%">
 	<tr> 
-	<th BGCOLOR="#FFFFFF"><b>White:</b><select name="player1" style="width: 180px">
-                <option value="754">Carlsen, Magnus</option>
-                <option value="263">Nakamura, Hikaru</option>
-                <option value="2784" selected>Kosteniuk, Alexandra</option>
+	<th BGCOLOR="#FFFFFF" align="center"><b>White:</b><select name="player1" style="width: 180px">
                 <option value="28533">Karjakin, Sergei</option>
+                <option value="263">Nakamura, Hikaru</option>
+                <option value="2784">Kosteniuk, Alexandra</option>
+                <option value="754">Carlsen, Magnus</option>
         </select></td></th>
-	<th BGCOLOR="#000000"><font color="white">Black:</font><select name="player2" style="width: 180px">
-	<option value="40024">Karjakin, Sergei</option>
+	<th BGCOLOR="#000000" align="center"><font color="white">Black:</font><select name="player2" style="width: 180px">
+                <option value="739">Carlsen, Magnus</option>
                 <option value="323">Nakamura, Hikaru</option>
-                <option value="739" selected>Carlsen, Magnus</option>
                 <option value="0" >Kosteniuk, Alexandra</option>
+		<option value="40024">Karjakin, Sergei</option>
         </select></th>
 	
 
         </tr>
 	<tr>
-	<td align="center"><img src = "/static/kosteniuk.jpeg" name="image-swap"></td>
-    	<td align="center"><img src = "/static/carlsen2.jpeg" align="center"></td>
+	<td align="center"><img src = "/static/karjakin.jpg" name="image-swap" style="width: 180px"></td>
+    	<td align="center"><img src = "/static/carlsen3.jpeg" align="center" ></td>
 	</tr>
-	<tr>	
-	<td>Player 1 Rating:<input type="text" name="player1_rating" /><br></td>
-	<td>Player 2 Rating:<input type="text" name="player2_rating" /><br></td>
-	</tr>	
 	</table>
 	<input type="submit"  class="btn btn-lg btn-primary" />
-	Other(can enter input vectors):<input type="text" name="other" /><br>
 	</form> 
 	</body>
         </div>
@@ -262,17 +258,20 @@ def predict():
 	
     player1 = int(request.form['player1'])
     #calculate the player1 rating here
-    player1_rating = 2600 #default
+    #player1_rating = 2600 #default
     #player1_rating = str(request.form['player1_rating'])
     #user_color = str(request.form['user_color'])
     player2 = int(request.form['player2'])
     #calculate the player2 rating here to 
-    player2_rating = 2600 # default
+    #player2_rating = 2600 # default
     #player2_rating = str(request.form['player2_rating'])
     #game_round = str(request.form['game_round'])
-    text = str(request.form['other'])  # used as a vector
+    #text = str(request.form['other'])  # used as a vector
     age = 100
-    p_wfm_given_white = 0.9
+    p_wfm_given_white = 0.9 
+    #p_opening_given_black = 0.75 
+    #p_opening_given_black = 0.75 
+    p_opening_given_white = 0.9
     p_opening_given_white = 0.9
     white_level_Expert = 0
     white_level_GM = 0
@@ -287,31 +286,31 @@ def predict():
     white_enc = player1
     black_enc = player2
     def get_rating_w(player):
-	if player=='754':
+	if player==754:
 	    return str(2882)
-	elif player=='263':
+	elif player==263:
             return str(2779)
-	elif player=='2784':
+	elif player==2784:
             return str(2555)
-	elif player=='28533':
+	elif player==28533:
             return str(2772)
 	else:
 	    return player1_rating
 
     def get_rating_b(player):
-        if player=='40024':
+        if player==40024:
 	    return str(2772)
-        elif player=='323':
+        elif player==323:
             return str(2779)
-        elif player=='739':
+        elif player==739:
             return str(2882)
-        elif player=='0':
+        elif player==0:
             return str(2555)
         else:
             return player2_rating
 
-    whiteelo = get_rating_w(player1)
-    blackelo = get_rating_b(player2)
+    whiteelo = int(get_rating_w(player1))
+    blackelo = int(get_rating_b(player2))
 
     diff = (int(whiteelo) - int(blackelo))
     #X = vectorizer.transform([text]) #unicode(text))
@@ -370,6 +369,7 @@ def predict():
     black_level_Master,
     black_level_Super,
     black_enc,
+    p_opening_given_white,
     p_wfm_given_white
     ])
     
@@ -390,6 +390,7 @@ def predict():
     black_level_Super,
     black_enc,
     p_opening_given_white,
+    #p_opening_given_black,
     p_wfm_given_white
     ])
 
@@ -508,7 +509,7 @@ def predict():
                 <th>#</th>
                 <th>Opening</th>
                 <th>Probability of Playing</th>
-                <th>Winning Chances</th>
+                <th>Winning Chances (ELO)</th>
               </tr>
             </thead>
             <tbody>
@@ -534,7 +535,7 @@ def predict():
           </table>
         </div>
         <div class="engine">
-        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1rnbqkbnrXppppppppX8X8X4P3X8XPPPP1PPPXRNBQKBNR_b_KQkq_e3_0_1">Practice Against Engine Below</a></h2>
+        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1r1bqkbnrXpppp1pppX2n5X1B2p3X4P3X5N2XPPPP1PPPXRNBQK2R_b_KQkq_-_3_3">Practice Against Engine Below</a></h2>
         </div>
 
         <div id="board" style="width: 400px"></div>
@@ -542,7 +543,7 @@ def predict():
 
         </body>
         </html>
-        '''.format(probs[0][1],probs_2[0][1][0:3],probs[0][1],str(round(probs[0][0]*100,2))+'%',probs[1][1],str(round(probs[1][0]*100,2))+'%',probs[2][1],str(round(probs[2][0]*100,2))+'%',prob_black)
+        '''.format(probs[0][1],probs_2[0][1],probs[0][1],str(round(probs[0][0]*100,2))+'%',probs[1][1],str(round(probs[1][0]*100,2))+'%',probs[2][1],str(round(probs[2][0]*100,2))+'%',prob_black)
 
 @app.route('/contact')
 def contact():
@@ -707,35 +708,48 @@ def about():
         <div class="jumbotron">
 
             <h2>About this project:</h2>
-            <p>My name is Eduardo Daroza.  I am a Data Scientist.  Formerly, I worked for 20 years as
+            <p>My name is Eduardo Daroza.  I am a Data Scientist.  Formerly, I worked as
             a Senior Software Engineer at Intel.</p>
 
             <p>This is my capstone project for the 12-Week Data Science Immersive program I attended at
             Galvanize in Seattle beginning in September of 2016.</p>
 
-            <p>The goal of my project is to predict white chess openings and first moves for white player.  As white has 
-            the first move advantage this tool can be used by players to prepare to play the black pieces by narrowing 
-	    what particular openings they should study.   
+            <p><b>Business understanding</b>: The goal of my project is to predict chess openings and first moves of the player with the white pieces
+	    who moves first.  There are many openings in chess (over 3600+ named variation and subvarations) and it is difficult to be an expert
+	    in them all.  Opening prediction can aid players to prepare to play the black pieces who start at a slight disadvantage having to respond to white
+            by narrowing what particular openings they should study.  
 
             <p>I learned chess from my father as a young boy but at that time was more interested in comic books, science 
             fiction and playing with my Commodore 64!  I re-discovered chess as a college student at University of Washington 
-            Fueled by the desire to avoid studying Kirchhoff's Voltage Law, Fourier transforms, and other Electrical Engineering            subjects I soon grew to love the game.  I began playing tournament chess and achieved an expert chess rating.</p>
+            Fueled by the desire to avoid studying Kirchhoff's Voltage Law, Fourier transforms, and other Electrical Engineering 
+            subjects I soon grew to love the game and obtained a rating of Expert</p>
 
-            <p>Dataset: I gathered archives of pgn files from KingBase2016-03. PGN is in an ascii format easibly readible 
-	    parsable and importable into pandas.</p>
+            <p><b>Dataset:</b> 
+	    I gathered archives of pgn files from KingBase2016-03. Games were in Portable game notation which contained 
+            the moves as well as meta data about the game such as players, ratings, color, date of game, event name, round.  After loading cleaning
+	    and transforming the data, I did my initial EDA in panda and found the distribution of openings to be heavily imbalanced.  As player was the 
+            feature with highest feature importance in the model I also had issue with high dimensionality of over 57,700 unique players for both colors </p>
 
-            <p>Models:
-            For my modeling I utilized XGBoost which is a form of Gradient Boosting Machine popular in Kaggle competitions. 
-            XGboost is an open-source, effective, efficient model and was developed by graduate students at my former alma 
-            matter.  XGBoost's abilitiy to parallelize building each decision tree helped during the training and tuning due to             my large dataset, high number of classes and high dimensionality of features. </p> 
+            <p><b>Models:</b>  
+            For my modeling I utilized XGBoost which stands for Xtreme Gradient Boosting. XGboost is an open-source, effective, efficient model developed 
+	    by graduate students at my former alma matter at University of Washington.  XGBoost's ability to parallelize building each regrssion tree 
+            helped during the training and tuning where I utilitzed Amazon EC2 instances with 16 and 32 cores</p> 
 
-            <p>Well I am not sure about whether data science will one day make me a Grand Master, but I
-            can say my capstone has helped as a platform to exercise many of the concepts and tools that the
-            Galvanize Instructors who are all tremendous scientists, teachers and people by the way
-            taught me.</p>
+	    <p><b>Evaluation:</b>
+            For my metric I was minimizing the logloss which penalizes for absurd misclassication with high certainty.   In this way it increases accuracy. 
+	    I found in comparison to other models that Boosting did the best achieving multilogloss of < 0.80.
+            I used my model against the recent World Chess Championship match between Magnus Carlsen and Sergey Karjakin and it predicted 1.e4 as the 
+            highest probability of occuring at 84% when in reality that move was played in nine out of the dozen classical games they played.
 
+	    <p><b>Deployment:</b> 
+	    The model was deployed using Flask and AWS and utilized Bootstrap.  I am working on getting the app to work with the massive dataset in 
+	    Dynamodb.  And would like to have the model to be able to get realtime updates of new games.  In addition I will plan to improve the model by
+            doing additional feature engineering and tuning. Lastly, I would like to incorporate some recommended chess opening suggestion based on the 
+	    success rates of the opening adjusted to reduce the effect of player rating on the outcome of the game by creating models based on players with 
+	    approcimitely equal levels as a means to infer which openings perform better. 
 
-
+	    <p><b>Thanks to the Galvanize Instructors for their support and who are all tremendous data scientists, teachers and people.  And thanks also go 
+	    to my cohort whom I also learned alot from and to everyone for enduring my endless anecdotes about chess.</p></b>
         </body>
         </div>
         </html>
