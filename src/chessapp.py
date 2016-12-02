@@ -23,10 +23,12 @@ with open('../data/xgboost_fm.pkl') as f:
     model_x_fm = pickle.load(f)
     print "loading xgboost model"
 
+#if we want to have the opening be consisten with first move prediction we need to train a model on fm and then run fmmodel as an input to the opening.
 #XGB FM xgboost_eco_names_final_tst.pkl
 #with open('../data/xgboost_eco_names_final_tst.pkl') as f:
-#with open('../data/xgboost_sg_names_final3.pkl') as f:
+#ith open('../data/xgboost_sg_names_final3.pkl') as f:
 with open('../data/xgboost_sg_names_final.pkl') as f:
+#with open('../data/finalXGB_test.pkl') as f:
     model_x_eco = pickle.load(f)
     print "loading xgboost model"
 
@@ -73,7 +75,7 @@ def index():
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="http://chesspro.tech/capstone/">Home</a></li>
+                <li class="active"><a href="http://chesspro.tech/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li class="dropdown">
@@ -97,14 +99,14 @@ def index():
         <div class="jumbotron">
             <h1>ChessPrO: Predict and recommend Openings</h1>
             <p>Making you a better chess player through Data Science! This app uses 1.9 million games
-            to predict White's first chess move and opening.
+            to predict White's first chess move and the most likely opening based on the model.
 	<form action="/submit" >
                 <input type="submit"  class="btn btn-lg btn-primary" value="Click Here To Start Predicting">
             </form>
         </div>
 
         <div class="page-header">
-        <h1>Slide Presentation</h1>
+        <h1>Slide Presentation </h1>
       </div>
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -114,22 +116,29 @@ def index():
           <li data-target="#carousel-example-generic" data-slide-to="3"></li>
           <li data-target="#carousel-example-generic" data-slide-to="4"></li>
           <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="6"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
           <div class="item active">
-            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Intro slide">
+            <img src="static/DarozaCapstoneFinal.001.jpeg" data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Intro slide">
           </div>
           <div class="item">
-            <img data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Capstone slide">
+            <img src="static/DarozaCapstoneFinal.003.jpeg" align="middle" data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Objective slide">
           </div>
           <div class="item">
-            <img data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Pipelinee slide">
+            <img src="static/DarozaCapstoneFinal.004.jpeg" data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Data Pipeline slide">
           </div>
-          <div class="item active">
-            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Methods slide">
+          <div class="item">
+            <img src="static/DarozaCapstoneFinal.005.jpeg" data-src="holder.js/1140x500/auto/#777:#555/text:Fourth slide" alt="Challenges slide">
           </div>
-          <div class="item active">
-            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="Result slide">
+          <div class="item">
+            <img src="static/DarozaCapstoneFinal.006.jpeg" data-src="holder.js/1140x500/auto/#777:#555/text:Fifth slide" alt="Models/Results slide">
+          </div>
+          <div class="item">
+            <img src="static/DarozaCapstoneFinal.008.jpeg" data-src="holder.js/1140x500/auto/#777:#555/text:Sixth slide" alt="Next Steps slide">
+          </div>
+          <div class="item">
+            <img src="static/DarozaCapstoneFinal.009.jpeg" data-src="holder.js/1140x500/auto/#777:#555/text:Seventh slide" alt="Thanks slide">
           </div>
         </div>
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -199,12 +208,12 @@ def submit():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://chesspro.tech/capstone/">Home</a></li>
+                    <li class="active"><a href="http://chesspro.tech/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
+			<ul class="dropdown-menu">
                         <li><a href="/tree.html">tree</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
@@ -227,7 +236,7 @@ def submit():
 	<table style="width:70%">
 	<tr> 
 	<th BGCOLOR="#FFFFFF" align="center"><b>White:</b><select name="player1" style="width: 180px">
-                <option value="28533">Karjakin, Sergei</option>
+                <option value="28533">Karjakin, Sergey</option>
                 <option value="263">Nakamura, Hikaru</option>
                 <option value="2784">Kosteniuk, Alexandra</option>
                 <option value="754">Carlsen, Magnus</option>
@@ -236,7 +245,7 @@ def submit():
                 <option value="739">Carlsen, Magnus</option>
                 <option value="323">Nakamura, Hikaru</option>
                 <option value="0" >Kosteniuk, Alexandra</option>
-		<option value="40024">Karjakin, Sergei</option>
+		<option value="40024">Karjakin, Sergey</option>
         </select></th>
 	
 
@@ -272,7 +281,7 @@ def predict():
     #p_opening_given_black = 0.75 
     #p_opening_given_black = 0.75 
     p_opening_given_white = 0.9
-    p_opening_given_white = 0.9
+    p_opening_given_black = 0.9
     white_level_Expert = 0
     white_level_GM = 0
     white_level_IM = 0
@@ -420,7 +429,8 @@ def predict():
 
     p2 =  model_x_eco.predict_proba([X_eco])
     #caclulate probabillities of wining for black
-    probs_2= sorted(zip(p2[0],model_x_eco.classes_),reverse=True)[:3]
+    #probs_2= sorted(zip(p2[0],model_x_eco.best_estimator_.classes_),reverse=True)[:6]
+    probs_2= sorted(zip(p2[0],model_x_eco.classes_),reverse=True)[:6]
     # whites first move advantage is less at beginner level but since this dataset is mainly more experienced players 
 #will simplify and adjust all white as 32. 
     import math
@@ -469,7 +479,7 @@ def predict():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://chesspro.tech/capstone/">Home</a></li>
+                    <li class="active"><a href="http://chesspro.tech/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li class="dropdown">
@@ -495,7 +505,7 @@ def predict():
         <div class="jumbotron">
         <h1>Predictions:</h1>
         <h3>First Move:{0} </h1>
-        <h3>Openings:<a href='http://chessopenings.com/eco/{1}'>{1}</a></h3>
+        <h3>Openings:<a href='http://chessopenings.com/eco/{9}'>{1}</a></h3>
         </div>
 
         <div class="page-header">
@@ -535,7 +545,7 @@ def predict():
           </table>
         </div>
         <div class="engine">
-        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1r1bqkbnrXpppp1pppX2n5X1B2p3X4P3X5N2XPPPP1PPPXRNBQK2R_b_KQkq_-_3_3">Practice Against Engine Below</a></h2>
+        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1r1bqkbnrXpppp1pppX2n5X1B2p3X4P3X5N2XPPPP1PPPXRNBQK2R_b_KQkq_-_3_3">Practice Against Computer</a></h2>
         </div>
 
         <div id="board" style="width: 400px"></div>
@@ -543,7 +553,7 @@ def predict():
 
         </body>
         </html>
-        '''.format(probs[0][1],probs_2[0][1],probs[0][1],str(round(probs[0][0]*100,2))+'%',probs[1][1],str(round(probs[1][0]*100,2))+'%',probs[2][1],str(round(probs[2][0]*100,2))+'%',prob_black)
+        '''.format(probs[0][1],probs_2[0][1],probs[0][1],str(round(probs[0][0]*100,2))+'%',probs[1][1],str(round(probs[1][0]*100,2))+'%',probs[2][1],str(round(probs[2][0]*100,2))+'%',prob_black,probs_2[0][1][:3])#,probs_2)#str(round(probs_2[0][0]*100,2))+'%')
 
 @app.route('/contact')
 def contact():
@@ -552,7 +562,7 @@ def contact():
          <html lang="en">
          <head>
          <meta charset="utf-8">
-         <title>ChessPRO: Predict and Recommend Openings</title>
+         <title>ChessPrO: Predict and recommend Openings</title>
          <meta name="description" content="ChessPRO: Predict and Recommend Openings">
          <meta name="author" content="Galvanize DSI">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -578,7 +588,7 @@ def contact():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li><a href="http://chesspro.tech/capstone/">Home</a></li>
+                    <li><a href="http://chesspro.tech/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li class="active"><a href="/contact">Contact</a></li>
                     <li class="dropdown">
@@ -602,9 +612,11 @@ def contact():
         <div class="container theme-showcase" role="main">
 
         <div class="jumbotron">
-        <h1>Predictions: Nf3 </h1>
-        <h3>Openings: A10 English </h3>
+	<h1>Predictions about Ed Daroza</h1>
+	<h3>First Move:1.Nf3 </h1>
+        <h3>Openings:<a href='http://chessopenings.com/eco/A10'>A10 English Opening</a><br>Github: github.com/daroza<br>Linked in: linkedin.com/in/daroza<br>Website: daroza.com</h3>
         </div>
+
 
         <div class="page-header">
         <h1>User Stats table</h1>
@@ -617,34 +629,33 @@ def contact():
                 <th>#</th>
                 <th>Opening</th>
                 <th>Probability of Playing</th>
-                <th>Winning Chances</th>
+                <th>Winning Chances (ELO)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>1</td>
-                <td>Nf3</td>
-                <td>73.21%</td>
-                <td>50%</td>
+                <td>1.Nf3</td>
+                <td>95.98%</td>
+                <td>50.00%</td>
               </tr>
               <tr>
                 <td>2</td>
-                <td>g3</td>
-                <td>12.58%</td>
-                <td>50%</td>
+                <td>1.c4</td>
+                <td>3.75%</td>
+                <td>50.00%</td>
               </tr>
               <tr>
                 <td>3</td>
-                <td>c4</td>
-                <td>3.34%</td>
-                <td>50%</td>
+                <td>1.g3</td>
+                <td>0.26%</td>
+                <td>50.00%</td>
               </tr>
             </tbody>
           </table>
         </div>
-
         <div class="engine">
-        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1rnbqkbnrXppppppppX8X8X8X5N2XPPPPPPPPXRNBQKB1R_b_KQkq_-_1_1">Practice Against Engine Below</a></h2>
+        <h2><a href="http://www.apronus.com/chess/puzzle/editor.php?playcomputer=1&fen=1rnbqkbnrXppppppppX8X8X8X5N2XPPPPPPPPXRNBQKB1R_b_KQkq_-_1_1">Practice Against Computer</a></h2>
         </div>
 
         </body>
@@ -684,7 +695,7 @@ def about():
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li><a href="http://chesspro.tech/capstone/">Home</a></li>
+                    <li><a href="http://chesspro.tech/">Home</a></li>
                     <li class="active"><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li class="dropdown">
@@ -714,50 +725,52 @@ def about():
             <p>This is my capstone project for the 12-Week Data Science Immersive program I attended at
             Galvanize in Seattle beginning in September of 2016.</p>
 
-            <p><b>Business understanding</b>: The goal of my project is to predict chess openings and first moves of the player with the white pieces
-	    who moves first.  There are many openings in chess (over 3600+ named variation and subvarations) and it is difficult to be an expert
-	    in them all.  Opening prediction can aid players to prepare to play the black pieces who start at a slight disadvantage having to respond to white
-            by narrowing what particular openings they should study.  
+            <p><b>Business understanding</b>: The goal of my project is to predict chess openings and first move of the player with the white pieces
+	    .  There are many openings in chess (over 3600+ named variations and subvariations) and it is difficult to be an expert
+	    in them all.  Opening prediction can especially help players 
+            by narrowing down particular openings they should study when faced with a particular opponent.  
 
             <p>I learned chess from my father as a young boy but at that time was more interested in comic books, science 
-            fiction and playing with my Commodore 64!  I re-discovered chess as a college student at University of Washington 
+            fiction and playing with my Commodore 64!  I re-discovered chess as a college student at University of Washington. 
             Fueled by the desire to avoid studying Kirchhoff's Voltage Law, Fourier transforms, and other Electrical Engineering 
-            subjects I soon grew to love the game and obtained a rating of Expert</p>
+            subjects I soon grew to love the game and obtained a rating of Expert.</p>
 
             <p><b>Dataset:</b> 
-	    I gathered archives of pgn files from KingBase2016-03. Games were in Portable game notation which contained 
-            the moves as well as meta data about the game such as players, ratings, color, date of game, event name, round.  After loading cleaning
-	    and transforming the data, I did my initial EDA in panda and found the distribution of openings to be heavily imbalanced.  As player was the 
-            feature with highest feature importance in the model I also had issue with high dimensionality of over 57,700 unique players for both colors </p>
+	    I gathered archives of pgn files from KingBase game archives online. Games were in Portable game notation which contained 
+            the moves as well as meta data about the game such as players, ratings, color, date of game, event name, round.  After loading, cleaning
+	    and transforming the data, I did my initial EDA in Pandas and found the distribution of openings to be heavily imbalanced.  As player names were the 
+            feature with highest feature importance in the model I also had a challenge with high dimensionality of over 57,700 unique players for both colors. </p>
 
             <p><b>Models:</b>  
-            For my modeling I utilized XGBoost which stands for Xtreme Gradient Boosting. XGboost is an open-source, effective, efficient model developed 
+            For my modeling I utilized XGBoost which stands for Extreme Gradient Boosting. XGboost is an open-source, effective, efficient model developed 
 	    by graduate students at my former alma matter at University of Washington.  XGBoost's ability to parallelize building each regrssion tree 
-            helped during the training and tuning where I utilitzed Amazon EC2 instances with 16 and 32 cores</p> 
+            helped during the training and tuning where I utilitzed Amazon EC2 instances with 16 and 32 cores.</p> 
 
 	    <p><b>Evaluation:</b>
             For my metric I was minimizing the logloss which penalizes for absurd misclassication with high certainty.   In this way it increases accuracy. 
-	    I found in comparison to other models that Boosting did the best achieving multilogloss of < 0.80.
+	    I found in comparison to other models that Boosting did the best achieving a multilogloss of < 0.80.
             I used my model against the recent World Chess Championship match between Magnus Carlsen and Sergey Karjakin and it predicted 1.e4 as the 
-            highest probability of occuring at 84% when in reality that move was played in nine out of the dozen classical games they played.
+            highest probability of occuring when in reality that move was played in nine out of the dozen classical games they played.
 
 	    <p><b>Deployment:</b> 
-	    The model was deployed using Flask and AWS and utilized Bootstrap.  I am working on getting the app to work with the massive dataset in 
-	    Dynamodb.  And would like to have the model to be able to get realtime updates of new games.  In addition I will plan to improve the model by
-            doing additional feature engineering and tuning. Lastly, I would like to incorporate some recommended chess opening suggestion based on the 
+	    The model was deployed using Flask and AWS.  I am working on getting the app to work with Amazon's 
+	    DynamoDB to enable updates of the model based on new games.  In addition, I will plan to improve the model by
+            doing additional feature engineering and tuning. Lastly, I would like to incorporate some recommended chess opening suggestions based on the 
 	    success rates of the opening adjusted to reduce the effect of player rating on the outcome of the game by creating models based on players with 
-	    approcimitely equal levels as a means to infer which openings perform better. 
+	    approximitely equal levels to understand which openings perform better when ratings does not overpower opening performance. 
 
-	    <p><b>Thanks to the Galvanize Instructors for their support and who are all tremendous data scientists, teachers and people.  And thanks also go 
+	    <p><b>Thanks to the instructors at Galvanize for their support and who are all tremendous data scientists, teachers and people.  And thanks also go 
 	    to my cohort whom I also learned alot from and to everyone for enduring my endless anecdotes about chess.</p></b>
         </body>
         </div>
+
         </html>
         '''
 
 @app.route('/tree.html', methods=['GET'])
 def tree():
     return render_template('tree.html') 
+
 
 #app.route('static/<string:page_name>')
 #def static(page_name):
