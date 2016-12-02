@@ -24,7 +24,7 @@
 
 # CRISP DM-3 Evaluation:
 
-# note: newXGB2.py is and search_max_del.py for 5folds cv for parameter tuning of 3 parameters: max_tree_depth:5,min_sample_leaf:1,max_delta_step:3.   Run these on AWS preferable with more than 16 cores to improve performance.
+# note: newXGB2.py is and search_max_del.py for 5folds cv for parameter tuning of 3 parameters: max_tree_depth:5,min_child_weight:1,max_delta_step:3.   Run these on AWS preferable with more than 16 cores to improve performance.
 
 # CRISP DM-4 Deployment:
 
