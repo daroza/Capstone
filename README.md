@@ -2,11 +2,12 @@
 # CRISP DM - 0 Business Understanding
 # Predicting Opening Moves for chess players to advise chess opening. 
 
-# This program takes in games in large database in pgn format and uses to build a model that helps recommend a chess opening.  
-# Technologies: Python/Sklearn data transformation and modeling, DynamoDB, flask for web Front End.
+# This repo contains the source used to build an XGBoost model to help players predict chess openings.  Files are collected from an online archives in pgn format, combined as the first step in data collection.  After load,clean and transform it builds an XGBOOST model that helps recommend a chess opening.  
+
+# Technologies: Python/Sklearn data transformation and modeling, DynamoDB(in progress), flask for web Front End.
 # Input: Player ratings, Player Names.
 
-# Output: The model will provide a list of predicted openings of what the opponent (playing white) is likely to play and good responses to increase the users winning odds based on playing history or the openings with the best results.  XGBoost was chosen as model.
+# Output: The model will provide a list of predicted openings of what the opponent (playing white) is likely to play and good responses to increase the users winning odds based on playing history or the openings with the best results.  XGBoost was chosen as model. The deployment is done in flask/bootstrap hosted in AWS and connected to a DynamoDB backend to store the dataset.
 
 # Steps performed followed CRISM DM methodologies:
 
@@ -23,7 +24,7 @@
 
 # CRISP DM-3 Evaluation:
 
-# note: newXGB.py is for 5folds cv for parameter tuning.   Run these on AWS preferable with more than 16 cores to improve performance.
+# note: newXGB2.py is and search_max_del.py for 5folds cv for parameter tuning of 3 parameters: max_tree_depth:5,min_sample_leaf:1,max_delta_step:3.   Run these on AWS preferable with more than 16 cores to improve performance.
 
 # CRISP DM-4 Deployment:
 
