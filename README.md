@@ -20,7 +20,7 @@
 # data EDA: load into pandas using final_capstone.ipynb to clean the data (4% duplicates) and prepare it for modeling.
 
 # CRISP DM-2 Data Modeling:
-# run build_fm.py to obtain pickled XGBoost model for 20 white opening moves.  build_sg.py to obtain XGboost model for supergroups (66 class targets). There should be two models generated.  One to predict whites first move and one to predict the EC supergroup which are 66 ECO codes (out of 500) that are grouped by similar structures.  If better coherence between first move and supergroup needs to be achieved then modify the supergroup build script to include the first move as a input feature. This is more a curriculum based approached where major classes are identified before subclasses.
+# run build_fm.py to obtain pickled XGBoost model for 20 white opening moves.  build_sg.py to obtain XGboost model for supergroups (66 class targets). There should be two models generated.  One to predict whites first move and one to predict the EC supergroup which are 66 ECO codes (out of 500) that are grouped by similar structures.  If better coherence between first move and supergroup needs to be achieved then modify the supergroup build script to include the first move as a input feature. This is more a curriculum based approach where major classes are identified before subclasses.
 
 # CRISP DM-3 Evaluation:
 
